@@ -1,12 +1,15 @@
 import React from 'react';
 import { Component } from 'react';
-import Menu from './src/components/Menu'
+import Menu from './src/components/Menu';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   Text,
   View,
   Button,
 } from 'react-native';
+import { Screen_ViewImportedCards } from './src/Screens/Screen_ViewImportedCards';
+import { Screen_Import } from './src/Screens/Screen_import';
 
 class App extends Component {
     constructor(props){
@@ -15,13 +18,12 @@ class App extends Component {
         contador: 0,
       }
     }
+
 render() {
 
 return(
-    <View> 
-      <Menu></Menu>
-      <Text>Hola</Text>
-    </View>
+  <Screen_Import></Screen_Import>
+  //<Screen_ViewImportedCards/>
 )
 }
 }
