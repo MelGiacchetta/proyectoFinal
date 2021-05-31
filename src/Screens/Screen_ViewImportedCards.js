@@ -16,15 +16,7 @@ class Screen_ViewImportedCards extends Component {
        importedApi: [],
       }
     }
-    async getData(){
-        try{
-          const resultado = await AsyncStorage('Api'); 
-          this.setState({importedApi: JSON.parse(resultado)})
-        }
-        catch(e){
-          console.log(e)
-        }
-      }
+    
     render() {
         const values = this.state.importedApi.map(item=>
             <Text key={item.login.uuid} 

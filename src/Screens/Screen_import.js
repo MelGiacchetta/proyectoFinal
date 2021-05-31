@@ -19,8 +19,8 @@ class Screen_Import extends Component {
       }
     }
     componentDidMount(){
-        this.getStringStorage();
-        this.getObjectStorage();
+        // this.getStringStorage();
+        // this.getObjectStorage();
         fetch("https://randomuser.me/api/?results=" + this.state.textHandler)
         .then(result => result.json())
         .then(data =>{
@@ -56,8 +56,8 @@ const values = this.state.api.map(item=>
     )
 return(
     <View>
-   <Text>Estás viendo: {this.state.textHandler} tarjetas </Text>
-      <TextInput onChangeText={text => this.setState({textHandler : text})}>¿Cuántas tarjetas deseás ver?</TextInput>
+   <Text>Cuantas tarjetas queres ver </Text>
+      <TextInput onChangeText={text => this.setState({textHandler : text})}></TextInput>
       <TouchableOpacity onPress={ this.storeData.bind(this) }>
         <View> 
           <Text>Guardar datos</Text>
