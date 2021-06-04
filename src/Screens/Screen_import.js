@@ -1,6 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getData} from '../api/RandomUsers';
 
 import {
   Text,
@@ -15,20 +16,18 @@ class Screen_Import extends Component {
       super(props);
       this.state= {
        api: [],
-       textHandler: 0,
+       cantidadElegida: 0,
+       apiActualizada: [],
       }
     }
     componentDidMount(){
-        // this.getStringStorage();
-        // this.getObjectStorage();
-        fetch("https://randomuser.me/api/?results=" + this.state.textHandler)
-        .then(result => result.json())
-        .then(data =>{
-            this.setState({api: data.results})
-        })
-        .catch((e) => console.log(e))
-       }
-
+      //  getData()
+      //   .then( (usuarios) => {
+      //     console.log(usuarios)
+      //     this.setState({ api: usuarios })
+      //     })
+      }
+      
     async storeData(){
         try{
             const jsonApi = JSON.stringify(this.state.api);
@@ -41,23 +40,22 @@ class Screen_Import extends Component {
     }
 
     importarTarjetas(){
-      fetch("https://randomuser.me/api/?results=" + this.state.textHandler)
+      fetch("https://randomuser.me/api/?results=" + this.state.cantidadElegida)
         .then(result => result.json())
         .then(data =>{
-            this.setState({api: data.results})
+            this.setState({apiActualizada: data.results})
         })
         .catch((e) => console.log(e))
     }
 
 render() {
-const values = this.state.api.map(item=>
-    <Text key={item.login.uuid} 
-          style={{fontSize: 20}}>{item.name.first}</Text>
+const values = this.state.api.map(persona=>
+    <Text key={persona.login.uuid}></Text>
     )
 return(
     <View>
    <Text>Cuantas tarjetas queres ver </Text>
-      <TextInput onChangeText={text => this.setState({textHandler : text})}></TextInput>
+      <TextInput onChangeText={text => this.setState({cantidadElegida : text})}></TextInput>
       <TouchableOpacity onPress={ this.storeData.bind(this) }>
         <View> 
           <Text>Guardar datos</Text>

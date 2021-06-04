@@ -8,9 +8,9 @@ import {
   View,
   Button,
 } from 'react-native';
-import { Screen_ViewImportedCards } from './src/Screens/Screen_ViewImportedCards';
-import { Screen_Import } from './src/Screens/Screen_import';
-import { Sceen_FlatList } from './src/Screens/Screen_FlatList'
+import { Screen_ViewImportedCards } from './src/screens/Screen_ViewImportedCards';
+import { Screen_Import } from './src/screens/Screen_import';
+import { Sceen_FlatList } from './src/screens/Screen_FlatList'
 class App extends Component {
     constructor(props){
       super(props);

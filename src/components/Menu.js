@@ -17,7 +17,7 @@ render() {
 
 return(
     <View> 
-      <Image style= {{height: 60, width: 60}} source={require('../img/menu.png')} />
+      <Image style= {{height: 60, width: 60}} source={require('../assets/Images/menu.png')} />
     </View>
 )
 }

@@ -3,10 +3,11 @@ import { render } from 'react-dom';
 import {
     View, 
     Text,
+    StyleSheet,
     ProgressViewIOSComponent,
 } from 'react-native';
 
-export class Screen_FlatList extends component {
+export class Screen_FlatList extends Component {
     constructor(){
         super();
         this.state={
@@ -19,7 +20,7 @@ export class Screen_FlatList extends component {
         {nombre: 'Ana',apellido: 'Fernandez'},
         {nombre: 'Ernesto',apellido: 'Perez'},
     ]
-}
+
 render(){
     return(
         <View style={{flex:1}}>
@@ -31,8 +32,7 @@ render(){
             />
         </View>
     )
-}
-
+}}
 const styles = StyleSheet.create({
     texto: {
         fontSize: 20
