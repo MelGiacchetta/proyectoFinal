@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getData} from '../api/RandomUsers';
+
 
 import {
   Text,
@@ -9,6 +9,7 @@ import {
   Button,
   TouchableOpacity,
   TextInput,
+  FlatList,
 } from 'react-native';
 
 class Screen_Import extends Component {
@@ -20,19 +21,18 @@ class Screen_Import extends Component {
        apiActualizada: [],
       }
     }
-    componentDidMount(){
-      //  getData()
-      //   .then( (usuarios) => {
-      //     console.log(usuarios)
-      //     this.setState({ api: usuarios })
-      //     })
-      }
-      
+componentDidMount(){
+  fetch("https://randomuser.me/api/?results=")
+  .then( response => response.json())
+  .then (result => {
+    this.setState( {api: result.results})
+  })
+}
     async storeData(){
         try{
             const jsonApi = JSON.stringify(this.state.api);
             await AsyncStorage.setItem("Api", jsonApi);
-            console.log("Datos almacenados");
+            console.log(this.state.api);
         }
         catch(e){
             console.log(e)
@@ -44,26 +44,22 @@ class Screen_Import extends Component {
         .then(result => result.json())
         .then(data =>{
             this.setState({apiActualizada: data.results})
+            console.log(this.state.apiActualizada)
         })
         .catch((e) => console.log(e))
     }
 
 render() {
-const values = this.state.api.map(persona=>
-    <Text key={persona.login.uuid}></Text>
-    )
 return(
-    <View>
-   <Text>Cuantas tarjetas queres ver </Text>
+  <View>
+   <Text>Cuantas tarjetas queres ver?</Text>
       <TextInput onChangeText={text => this.setState({cantidadElegida : text})}></TextInput>
-      <TouchableOpacity onPress={ this.storeData.bind(this) }>
+      <TouchableOpacity onPress={this.storeData.bind(this)} onPress= {this.importarTarjetas.bind(this)}>
         <View> 
-          <Text>Guardar datos</Text>
+          <Text>Guardar tarjetas</Text>
         </View>
       </TouchableOpacity>
     </View>
-    
-    
 )
 }
 }

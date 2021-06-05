@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import {getData} from '../api/RandomUsers';
+
 import {
     View, 
     Text,
     StyleSheet,
-    ProgressViewIOSComponent,
+    FlatList,
 } from 'react-native';
 
 export class Screen_FlatList extends Component {
@@ -14,21 +16,28 @@ export class Screen_FlatList extends Component {
             api: [],
         }
     }
-    
-    personas = [
-        {nombre: 'juan',apellido: 'Perez'},
-        {nombre: 'Ana',apellido: 'Fernandez'},
-        {nombre: 'Ernesto',apellido: 'Perez'},
-    ]
+    componentDidMount(){
+        getData()
+        console.log("1")
+        .then((personas) => {
+        this.setState({api: personas})
+        })
+        }
+        
+    renderItem = ({item}) => {
+        return (
+            <Text style={styles.texto}>{item.apellido},{item.nombre}</Text>
+                )
+    }
+    keyExtractor = (item, idx) => idx.toString()
 
 render(){
     return(
         <View style={{flex:1}}>
             <FlatList
             data = {this.state.api}
-            keyExtractor = { (item, idx) => idx.toString()}
-            renderItem= { ({item})=> 
-            <Text style={styles.texto}>{item.apellido},{item.nombre}</Text>}
+            keyExtractor = {this.keyExtractor}
+            renderItem = {this.renderItem}
             />
         </View>
     )

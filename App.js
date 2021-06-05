@@ -2,15 +2,15 @@ import React from 'react';
 import { Component } from 'react';
 import Menu from './src/components/Menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Screen_ViewImportedCards } from './src/screens/Screen_ViewImportedCards';
+import { Screen_Import } from './src/screens/Screen_import';
 
 import {
   Text,
   View,
   Button,
 } from 'react-native';
-import { Screen_ViewImportedCards } from './src/screens/Screen_ViewImportedCards';
-import { Screen_Import } from './src/screens/Screen_import';
-import { Sceen_FlatList } from './src/screens/Screen_FlatList'
+
 class App extends Component {
     constructor(props){
       super(props);
@@ -22,8 +22,9 @@ class App extends Component {
 render() {
 
 return(
-  <Screen_Import></Screen_Import>
-  //<Screen_ViewImportedCards/>
+    <Screen_Import></Screen_Import>
+  // <Screen_ViewImportedCards/>
+
 )
 }
 }

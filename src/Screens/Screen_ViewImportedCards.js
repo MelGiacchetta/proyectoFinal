@@ -1,6 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import FlatList from './Screen_FlatList';
+import {getData} from '../api/RandomUsers';
 
 import {
   Text,
@@ -16,17 +17,13 @@ class Screen_ViewImportedCards extends Component {
        importedApi: [],
       }
     }
-    
+
     render() {
-        const values = this.state.importedApi.map(item=>
-            <Text key={item.login.uuid} 
-                  style={{fontSize: 20}}>{item.name.first}</Text>
-            )
         return(
             <View>
               <Text>aca mostramos los valores importados</Text>
-              {values}
-              <TouchableOpacity onPress={ this.getData.bind(this) }>
+              <FlatList></FlatList>
+              <TouchableOpacity onPress={ this.getData.bind(this)}>
                 <View> 
                   <Text>Recuperar datos</Text>
                 </View>
