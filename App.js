@@ -4,6 +4,7 @@ import Menu from './src/components/Menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Screen_ViewImportedCards } from './src/screens/Screen_ViewImportedCards';
 import { Screen_Import } from './src/screens/Screen_import';
+import {Screen_FlatList} from './src/Screens/Screen_FlatList'
 
 import {
   Text,
@@ -22,9 +23,9 @@ class App extends Component {
 render() {
 
 return(
-    <Screen_Import></Screen_Import>
-  // <Screen_ViewImportedCards/>
-
+    // <Screen_Import></Screen_Import>
+   //<Screen_ViewImportedCards></Screen_ViewImportedCards>
+    <Screen_FlatList></Screen_FlatList>
 )
 }
 }

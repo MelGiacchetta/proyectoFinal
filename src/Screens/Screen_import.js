@@ -30,9 +30,9 @@ componentDidMount(){
 }
     async storeData(){
         try{
-            const jsonApi = JSON.stringify(this.state.api);
+            const jsonApi = JSON.stringify(this.state.apiActualizada);
             await AsyncStorage.setItem("Api", jsonApi);
-            console.log(this.state.api);
+            console.log(this.state.apiActualizada);
         }
         catch(e){
             console.log(e)
@@ -43,23 +43,25 @@ componentDidMount(){
       fetch("https://randomuser.me/api/?results=" + this.state.cantidadElegida)
         .then(result => result.json())
         .then(data =>{
-            this.setState({apiActualizada: data.results})
+            this.setState({apiActualizada: data.results })
             console.log(this.state.apiActualizada)
         })
         .catch((e) => console.log(e))
     }
 
 render() {
+  
 return(
   <View>
-   <Text>Cuantas tarjetas queres ver?</Text>
-      <TextInput onChangeText={text => this.setState({cantidadElegida : text})}></TextInput>
-      <TouchableOpacity onPress={this.storeData.bind(this)} onPress= {this.importarTarjetas.bind(this)}>
-        <View> 
-          <Text>Guardar tarjetas</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+   <Text>Cuantas tarjetas queres importar?</Text>
+   <TextInput onChangeText={text => this.setState({cantidadElegida : text})}></TextInput>
+   <TouchableOpacity onPress = {this.importarTarjetas.bind(this)}>
+    <Text>Importar</Text>
+   </TouchableOpacity>
+   <TouchableOpacity onPress = {this.storeData.bind(this)}>
+     <Text>Guardar tarjetas importadas</Text>
+   </TouchableOpacity>
+  </View>
 )
 }
 }
