@@ -23,9 +23,9 @@ class App extends Component {
 render() {
 
 return(
-    // <Screen_Import></Screen_Import>
-   //<Screen_ViewImportedCards></Screen_ViewImportedCards>
-    <Screen_FlatList></Screen_FlatList>
+   //<Screen_Import></Screen_Import>
+   <Screen_ViewImportedCards></Screen_ViewImportedCards>
+    //<Screen_FlatList></Screen_FlatList>
 )
 }
 }

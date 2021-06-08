@@ -9,7 +9,7 @@ import {
     FlatList,
 } from 'react-native';
 
-export class Screen_FlatList extends Component {
+class Screen_FlatList extends Component{
     constructor(){
         super();
         this.state = {
@@ -54,7 +54,7 @@ render(){
         </View>
     )
 }}
-// const styles = StyleSheet.create({
+ const styles = StyleSheet.create({
     container: {
         flex: 1, 
         justifyContent: 'center',
@@ -62,7 +62,7 @@ render(){
 
     },
     texto: {
-        fontSize: 20,
+        fontSize: 15,
     }, 
     card: {
         backgroundColor: "pink", 
@@ -75,3 +75,5 @@ render(){
         padding: 10, 
     }
 })
+
+export {Screen_FlatList};

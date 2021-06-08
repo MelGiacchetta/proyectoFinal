@@ -9,6 +9,7 @@ import {
   View,
   Button,
   TouchableOpacity,
+  StyleSheet
 } from 'react-native';
 
 
@@ -16,36 +17,41 @@ class Screen_ViewImportedCards extends Component {
     constructor(props){
       super(props);
       this.state = {
-       importedApi: [],
+        apiActualizada: [],
       }
     }
-    async getData(){
+    
+async getData(){
       try {
         const resultado = await AsyncStorage.getItem("Api");
-        this.setState({importedApi: JSON.parse(resultado)})
-        console.log(this.state.importedApi)
+        this.setState({apiActualizada: JSON.parse(resultado)})
+        console.log(this.state.apiActualizada)
       } catch(e){
         console.log(e)
       }
     }
-    render() {
-      const values = this.state.importedApi.map(item =>
-        <Text key = {item.login.uuid}> {item.name.first} </Text>)
+    
+render() {
+
+  const values = this.state.apiActualizada.map(item =>
+        <Text key = {item.login.uuid} style={{fontSize:15}}> {item.name.first} {item.name.last}</Text>
+        )
+
      
         return(
-            <View>
-              <Text>Usuarios</Text>
-              <TouchableOpacity onPress={ this.getData.bind(this) }>
-                <View> 
+            <View style={styles.view}>
+              <Text style={styles.titile}>Usuarios</Text>
+              <TouchableOpacity  onPress={ this.getData.bind(this) }>
+                <View style = {styles.button}> 
                   <Text>
-                    Mostrar datos importados
+                    Recuperar usuarios importados
                   </Text>
                   {values}
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress = {()=> this.setState({importedApi: []})}>
-                <View>
-                  <Text>
+              <TouchableOpacity  onPress = {()=> this.setState({apiActualizada: []})}>
+                <View style = {styles.button}>
+                  <Text >
                     Borrar todos los datos
                   </Text>
                 </View>
@@ -55,6 +61,41 @@ class Screen_ViewImportedCards extends Component {
             
             
         )
-        }
+
+        };
+        
 }
+
+const styles = StyleSheet.create ({
+
+  view:{
+    flex: 1, 
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  
+  titile:{
+    fontSize:30
+  },
+
+  button:{
+    fontSize:18,
+    textAlign:"center",
+    padding:10,
+    margin:20,
+    borderRadius:30,
+    borderStyle:"solid",
+  },
+
+  imput:{
+      borderWidth:2,
+      borderStyle:"solid",
+      borderRadius:10,
+      margin:10,
+  },
+
+
+})
+
+
 export {Screen_ViewImportedCards};
