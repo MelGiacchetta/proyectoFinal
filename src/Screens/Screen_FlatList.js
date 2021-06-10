@@ -13,7 +13,7 @@ class Screen_FlatList extends Component{
     constructor(){
         super();
         this.state = {
-            usuarios: [],
+            api: [],
         }
     }  
     // componentDidMount(){
@@ -26,8 +26,8 @@ class Screen_FlatList extends Component{
     async getData(){
         try {
           const resultado = await AsyncStorage.getItem("Api");
-          this.setState({usuarios: JSON.parse(resultado)})
-          console.log(this.state.usuarios)
+          this.setState({api: JSON.parse(resultado)})
+          console.log(this.state.api)
         } catch(e){
           console.log(e)
         }
@@ -58,22 +58,20 @@ render(){
     container: {
         flex: 1, 
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: "lavender",
 
     },
     texto: {
         fontSize: 15,
     }, 
-    card: {
-        backgroundColor: "pink", 
-        borderStyle: 'solid', 
-        borderWidth: 1,
-        borderRadius: 10,
-        margin: 5,
-        width: 250, 
-        height: 100,
-        padding: 10, 
-    }
+    card:{
+        backgroundColor:"mistyrose",
+        borderRadius:10,
+        borderStyle:"solid",
+        borderWidth:1,
+        margin:5,
+      },
 })
 
 export {Screen_FlatList};

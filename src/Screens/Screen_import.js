@@ -3,6 +3,7 @@ import { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
+
 import {
   Text,
   View,
@@ -11,7 +12,9 @@ import {
   TextInput,
   FlatList,
   StyleSheet,
+  Alert,
 } from 'react-native';
+import { render } from 'react-dom';
 
 class Screen_Import extends Component {
     constructor(props){
@@ -30,11 +33,12 @@ componentDidMount(){
 }
 
 
-async storeData(){
+async storeData(jsonApi){
         try{
             const jsonApi = JSON.stringify(this.state.api);
             await AsyncStorage.setItem("Api", jsonApi);
             console.log(this.state.api);
+          //  Alert.alert("Datos guardados correctamente.");
         }
         catch(e){
             console.log(e)
@@ -46,8 +50,8 @@ importarTarjetas(){
       fetch("https://randomuser.me/api/?results=" + this.state.cantidadElegida)
         .then(result => result.json())
         .then(data =>{
-            this.setState({apiActualizada: data.results })
-            console.log(this.state.apiActualizada)
+            this.setState({api: data.results })
+            console.log(this.state.api)
         })
         .catch((e) => console.log(e))
     }
@@ -78,7 +82,8 @@ const styles = StyleSheet.create ({
     view:{
       flex: 1, 
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      backgroundColor: "lavender",
     },
     
     titile:{

@@ -24,8 +24,14 @@ class Screen_ViewImportedCards extends Component {
 async getData(){
       try {
         const resultado = await AsyncStorage.getItem("Api");
-        this.setState({apiActualizada: JSON.parse(resultado)})
-        console.log(this.state.apiActualizada)
+        if (resultado !== null){
+          this.setState({apiActualizada: JSON.parse(resultado)})
+          console.log(this.state.apiActualizada)
+        }else {
+          console.log("no hay usuarios guardados")
+        }
+ 
+       
       } catch(e){
         console.log(e)
       }
@@ -34,7 +40,7 @@ async getData(){
 render() {
 
   const values = this.state.apiActualizada.map(item =>
-        <Text key = {item.login.uuid} style={{fontSize:15}}> {item.name.first} {item.name.last}</Text>
+        <Text key = {item.login.uuid} style={{fontSize:15}}> {item.name.first}{item.name.last} </Text>
         )
 
      
@@ -46,7 +52,9 @@ render() {
                   <Text>
                     Recuperar usuarios importados
                   </Text>
-                  {values}
+                  <Text style={styles.card}>
+                    {values}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity  onPress = {()=> this.setState({apiActualizada: []})}>
@@ -72,14 +80,19 @@ const styles = StyleSheet.create ({
     flex: 1, 
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: "lavender",
   },
   
   titile:{
     fontSize:30
   },
+  texto:{
+    fontSize:15
+  },
+
 
   button:{
-    fontSize:18,
+    fontSize:15,
     textAlign:"center",
     padding:10,
     margin:20,
