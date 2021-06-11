@@ -4,13 +4,17 @@ import Menu from './src/components/Menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Screen_ViewImportedCards } from './src/screens/Screen_ViewImportedCards';
 import { Screen_Import } from './src/screens/Screen_import';
-import {Screen_FlatList} from './src/Screens/Screen_FlatList'
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
 
 import {
   Text,
   View,
   Button,
 } from 'react-native';
+
+
+const Drawer= createDrawerNavigator();
 
 class App extends Component {
     constructor(props){
@@ -23,9 +27,29 @@ class App extends Component {
 render() {
 
 return(
-   //<Screen_Import></Screen_Import>
-   <Screen_ViewImportedCards></Screen_ViewImportedCards>
-    //<Screen_FlatList></Screen_FlatList>
+   <NavigationContainer>
+      <Drawer.Navigator drawerType= "slide" drawerPosition = "left" overlayColor = "blue" 
+     drawerStyle = {{
+         backgroundColor: "rojo",
+        width: 250
+      }}
+       drawerContentOptions = {{
+        activeTintColor: "white",
+         activeBackgroundColor: "blue",
+        inactiveBackgroundColor: "black",
+        itemStyle: {borderRadius: 100, backgroundColor: "yellow"}
+      }}
+     >
+       <Drawer.Screen name="Importar tarjetas" component= {Screen_Import} options = {{title: "Importar tarjetas"}}/>
+       <Drawer.Screen name="Ver tarjetas importadas" component= {Screen_ViewImportedCards} options = {{title: "Tarjetas importadas"}}/>
+       {/* <Drawer.Screen name="Modificar tarjetas" component= {Screen_ViewImportedCards} options = {{title: "Tarjetas importadas"}}/> */}
+       {/* <Drawer.Screen name="Papelera de reciclaje" component= {Screen_ViewImportedCards} options = {{tittle: "Tarjetas importadas"}}/> */}
+       {/* <Drawer.Screen name="Acerca de ..." component= {Screen_ViewImportedCards} options = {{tittle: "Tarjetas importadas"}}/> */}
+       </Drawer.Navigator>
+   </NavigationContainer>
+  //  <Screen_Import></Screen_Import>
+    // <Screen_ViewImportedCards></Screen_ViewImportedCards>
+    // <Screen_FlatList></Screen_FlatList>
 )
 }
 }

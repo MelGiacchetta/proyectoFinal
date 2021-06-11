@@ -22,6 +22,7 @@ class Screen_Import extends Component {
       this.state= {
        api: [],
        cantidadElegida: 0,
+       cantidadImportada: 0,
       }
     }
 componentDidMount(){
@@ -56,6 +57,10 @@ importarTarjetas(){
         .catch((e) => console.log(e))
     }
 
+cantidadImportada(){
+  this.setState ({cantidadImportada: this.state.cantidadElegida})
+}
+
 render() {
   
 return(
@@ -64,9 +69,10 @@ return(
       <TextInput style={styles.imput} onChangeText={text => this.setState({cantidadElegida : text})}></TextInput>
       <TouchableOpacity  onPress = {this.importarTarjetas.bind(this)}>
             <View style={styles.button}>
-                <Text>Importar</Text>
+                <Text onPress = {this.cantidadImportada.bind(this)}>Importar</Text>
             </View>
       </TouchableOpacity>
+      <Text> Se importaron: {this.state.cantidadImportada} </Text>
       <TouchableOpacity  onPress = {this.storeData.bind(this)}>
             <View style={styles.button}>
                 <Text>Guardar tarjetas importadas</Text>

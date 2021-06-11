@@ -20,7 +20,17 @@ class Screen_ViewImportedCards extends Component {
         apiActualizada: [],
       }
     }
-    
+
+// componentDidMount() {
+//   this.unscribe = this.props.navigation.addListener('focus', () => {
+//     this.getData();
+//   })
+//   Alert.alert("Mount")
+// }
+// componentWillUnmount() {
+//   this.unscribe();
+// }
+
 async getData(){
       try {
         const resultado = await AsyncStorage.getItem("Api");
@@ -38,12 +48,16 @@ async getData(){
     }
     
 render() {
-
-  const values = this.state.apiActualizada.map(item =>
-        <Text key = {item.login.uuid} style={{fontSize:15}}> {item.name.first}{item.name.last} </Text>
-        )
-
-     
+  renderItem = ({item}) => {
+    return (
+    <View style = {styles.card}>
+        <Text style={styles.texto}>Los usuarios son: {item.name.first} {item.name.last} {item.picture.medium} {item.email} ({item.dob.age}) </Text>
+    </View>
+            )
+}
+  //  const values = this.state.apiActualizada.map(item =>
+  //       <Text key = {item.login.uuid} style={{fontSize:15}}> {item.name.first} {item.name.last} </Text>
+  //       )
         return(
             <View style={styles.view}>
               <Text style={styles.titile}>Usuarios</Text>
@@ -52,9 +66,14 @@ render() {
                   <Text>
                     Recuperar usuarios importados
                   </Text>
-                  <Text style={styles.card}>
+                  {/* <Text style={styles.card}>
                     {values}
-                  </Text>
+                  </Text> */}
+                  <FlatList
+                      data = {this.state.apiActualizada}
+                      keyExtractor = {this.keyExtractor}
+                      renderItem = {this.renderItem}
+                  />
                 </View>
               </TouchableOpacity>
               <TouchableOpacity  onPress = {()=> this.setState({apiActualizada: []})}>

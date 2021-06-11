@@ -33,11 +33,10 @@ class Screen_FlatList extends Component{
         }
       }
         
-    renderItem = ({usuario}) => {
+    renderItem = ({item}) => {
         return (
-
         <View style = {styles.card}>
-            <Text style={styles.texto}>Los usuarios son: {usuario.name.first},{usuario.name.last}</Text>
+            <Text style={styles.texto}>Los usuarios son: {item.name.first},{item.name.last}</Text>
         </View>
                 )
     }
@@ -47,7 +46,7 @@ render(){
     return(
         <View style={styles.container}>
             <FlatList
-            data = {this.state.usuarios}
+            data = {this.state.api}
             keyExtractor = {this.keyExtractor}
             renderItem = {this.renderItem}
             />
