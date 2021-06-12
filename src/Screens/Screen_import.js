@@ -1,8 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
+import styles from '../styles/Styles';
 
 import {
   Text,
@@ -14,7 +13,6 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
-import { render } from 'react-dom';
 
 class Screen_Import extends Component {
     constructor(props){
@@ -65,8 +63,8 @@ render() {
   
 return(
   <View style={styles.view}>
-      <Text style={styles.titile}>¿Cuantas tarjetas deseas importar?</Text>
-      <TextInput style={styles.imput} onChangeText={text => this.setState({cantidadElegida : text})}></TextInput>
+      <Text style={styles.title}>¿Cuantas tarjetas deseas importar?</Text>
+      <TextInput style={styles.input} onChangeText={text => this.setState({cantidadElegida : text})}></TextInput>
       <TouchableOpacity  onPress = {this.importarTarjetas.bind(this)}>
             <View style={styles.button}>
                 <Text onPress = {this.cantidadImportada.bind(this)}>Importar</Text>
@@ -82,38 +80,4 @@ return(
 )}
 
 }
-
-const styles = StyleSheet.create ({
-
-    view:{
-      flex: 1, 
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: "lavender",
-    },
-    
-    titile:{
-      fontSize:30
-    },
-
-    button:{
-      fontSize:18,
-      textAlign:"center",
-      padding:10,
-      margin:20,
-      borderRadius:30,
-      borderStyle:"solid",
-    },
-
-    imput:{
-        borderWidth:2,
-        borderStyle:"solid",
-        borderRadius:10,
-        margin:10,
-    },
-
-
-})
-
-
 export {Screen_Import};

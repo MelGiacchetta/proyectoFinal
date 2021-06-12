@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Text} from 'react-native'
 
-class Screen_Papelera extends Component {
+class Screen_ModificarTarjetas extends Component {
 
 render() {
 
@@ -10,4 +10,4 @@ return(
 )
 }
 }
-export  {Screen_Papelera};
+export  {Screen_ModificarTarjetas};

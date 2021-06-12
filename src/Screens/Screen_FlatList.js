@@ -64,13 +64,7 @@ render(){
     texto: {
         fontSize: 15,
     }, 
-    card:{
-        backgroundColor:"mistyrose",
-        borderRadius:10,
-        borderStyle:"solid",
-        borderWidth:1,
-        margin:5,
-      },
+    
 })
 
 export {Screen_FlatList};
