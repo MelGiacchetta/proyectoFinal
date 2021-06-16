@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import {getData} from '../api/RandomUsers';
+import { getData } from '../api/RandomUsers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../styles/Styles';
 
@@ -37,48 +37,50 @@ async getData(){
         const resultado = await AsyncStorage.getItem("Api");
         if (resultado !== null){
           this.setState({apiActualizada: JSON.parse(resultado)})
-          console.log(this.state.apiActualizada)
-        }else {
+          console.log(resultado)
+        } else {
           console.log("no hay usuarios guardados")
         }
- 
-       
-      } catch(e){
+        } catch(e){
         console.log(e)
+        }
       }
-    }
   
 renderItem = ({item}) => {
       return (
-      <View style = {styles.card}>
-          <Text style={styles.texto}>Los usuarios son: {item.name.first} {item.name.last} {item.picture.medium} {item.email} ({item.dob.age}) </Text>
+      <View>
+        
+          <Text style={ styles.texto }> { item.name.first } { item.name.last } { item.picture.medium } { item.email } ({ item.dob.age }) </Text>
       </View>
               )
   }
-keyExtractor = (item, idx) => idx.toString()
+  
+keyExtractor = (item, idx) => idx.toString();
 
   render() {
+
         return(
-            <View >
-              <Text style={styles.title}>Usuarios</Text>
+            <View style = { styles.view }> 
+              <Text style={ styles.title }> Usuarios </Text>
               <TouchableOpacity  onPress={ this.getData.bind(this) }>
-                <View style = {styles.button}> 
-                  <Text>
-                    Recuperar usuarios importados
+                <View style = { styles.button }> 
+                  <Text style = { styles.buttonText }>
+                    Recuperar usuarios
                   </Text>
                 </View>
               </TouchableOpacity>
-              <View style= {styles.card}>
-              <FlatList 
+              <View>
+              <Text>Los usuarios son: </Text>
+              <FlatList style= {styles.card}
                       data = {this.state.apiActualizada}
                       keyExtractor = {this.keyExtractor}
                       renderItem = {this.renderItem}
               />
               </View>
-              <TouchableOpacity  onPress = {()=> this.setState({apiActualizada: []})}>
+              <TouchableOpacity onPress = {() => this.setState({apiActualizada: []})}>
                 <View style = {styles.button}>
-                  <Text >
-                    Borrar todos los datos
+                  <Text style = {styles.buttonText}>
+                    Borrar usuarios
                   </Text>
                 </View>
               </TouchableOpacity>

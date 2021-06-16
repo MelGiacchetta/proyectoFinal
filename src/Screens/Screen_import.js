@@ -34,9 +34,12 @@ componentDidMount(){
 
 async storeData(jsonApi){
         try{
-            const jsonApi = JSON.stringify(this.state.api);
+            let resultado = await AsyncStorage.getItem("Api");
+            if (resultado == null) resultado = []
+            resultado.push(this.state.api)
+            const jsonApi = JSON.stringify(resultado);
             await AsyncStorage.setItem("Api", jsonApi);
-            console.log(this.state.api);
+            console.log(resultado);
           //  Alert.alert("Datos guardados correctamente.");
         }
         catch(e){
@@ -62,18 +65,18 @@ cantidadImportada(){
 render() {
   
 return(
-  <View style={styles.view}>
-      <Text style={styles.title}>¿Cuantas tarjetas deseas importar?</Text>
+  <View style = {styles.view}>
+      <Text style={styles.title}>¿Cuántas tarjetas deseas importar?</Text>
       <TextInput style={styles.input} onChangeText={text => this.setState({cantidadElegida : text})}></TextInput>
-      <TouchableOpacity  onPress = {this.importarTarjetas.bind(this)}>
+      <TouchableOpacity onPress = {this.importarTarjetas.bind(this)}>
             <View style={styles.button}>
-                <Text onPress = {this.cantidadImportada.bind(this)}>Importar</Text>
+                <Text style = { styles.buttonText } onPress = {this.cantidadImportada.bind(this)}>Importar</Text>
             </View>
       </TouchableOpacity>
-      <Text> Se importaron: {this.state.cantidadImportada} </Text>
+      <Text style = {styles.textImport}> Se importaron: {this.state.cantidadImportada} tarjetas</Text>
       <TouchableOpacity  onPress = {this.storeData.bind(this)}>
             <View style={styles.button}>
-                <Text>Guardar tarjetas importadas</Text>
+                <Text style = { styles.buttonText } >Guardar tarjetas importadas</Text>
               </View>
       </TouchableOpacity>
   </View>
