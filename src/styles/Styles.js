@@ -4,24 +4,22 @@ const styles = StyleSheet.create ({
 
     view:{
       flex: 1, 
-      backgroundColor: "mistyrose",
+      backgroundColor: "whitesmoke",
+      justifyContent: "center",
     },
-    
 
     title: {
       fontSize: 30,
       justifyContent: 'center',
       textAlign: 'center',
       fontWeight: 'bold',
-      backgroundColor: 'plum'
-
     },
 
     button:{
       fontSize:18,
       textAlign:"center",
-      padding:10,
-      margin:20,
+      padding:4,
+      margin:10,
       borderRadius:30,
       borderStyle:"solid",
       backgroundColor: 'black',
@@ -31,10 +29,12 @@ const styles = StyleSheet.create ({
     buttonText: {
       color: 'white',
       fontSize: 20,
+      textAlign: "center",
     },
 
     textImport: {
       fontSize: 17,
+      textAlign: "center",
     },
 
     input:{
@@ -48,15 +48,44 @@ const styles = StyleSheet.create ({
     },
 
     texto:{
-        fontSize:15
+        fontSize: 20,
+        textAlign: "center",
     },
 
     card:{
-      borderWidth: 2,
-      height: 60, 
-    }
+      height: 500, 
+    },
 
-    
+    tarjeta: {
+      borderWidth: 2,
+      backgroundColor: "lavender",
+      padding: 10,
+      margin: 5,
+      borderRadius: 30,
+    },
+
+    nombres: {
+      textAlign: "center",
+      fontSize: 25,
+    },
+
+    acercaDe: {
+      backgroundColor: "whitesmoke",
+      flex: 1,
+      justifyContent: "center",
+    },
+
+    imagen: {
+      width: 100,
+      height: 100,
+      alignSelf: "center",
+      borderRadius: 100,
+    },
+
+    drawerStyle : {
+      backgroundColor: "black",
+      width: 250,
+    },
 })
 
 export default styles

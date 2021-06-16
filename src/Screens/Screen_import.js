@@ -23,24 +23,23 @@ class Screen_Import extends Component {
        cantidadImportada: 0,
       }
     }
-componentDidMount(){
-  fetch("https://randomuser.me/api/?results=")
-  .then( response => response.json())
-  .then (result => {
-    this.setState( {api: result.results})
-  })
-}
 
+//  async componentDidMount(){
+//   await AsyncStorage.removeItem("Api")
+//   }
 
-async storeData(jsonApi){
+async storeData(){
         try{
             let resultado = await AsyncStorage.getItem("Api");
+            resultado = JSON.parse(resultado)
             if (resultado == null) resultado = []
-            resultado.push(this.state.api)
+            this.state.api.map(data=>{ 
+              resultado.push(data)
+            })
             const jsonApi = JSON.stringify(resultado);
             await AsyncStorage.setItem("Api", jsonApi);
             console.log(resultado);
-          //  Alert.alert("Datos guardados correctamente.");
+          // Alert.alert("Datos guardados correctamente.");
         }
         catch(e){
             console.log(e)
@@ -52,6 +51,7 @@ importarTarjetas(){
       fetch("https://randomuser.me/api/?results=" + this.state.cantidadElegida)
         .then(result => result.json())
         .then(data =>{
+            console.log(data)
             this.setState({api: data.results })
             console.log(this.state.api)
         })
@@ -70,13 +70,13 @@ return(
       <TextInput style={styles.input} onChangeText={text => this.setState({cantidadElegida : text})}></TextInput>
       <TouchableOpacity onPress = {this.importarTarjetas.bind(this)}>
             <View style={styles.button}>
-                <Text style = { styles.buttonText } onPress = {this.cantidadImportada.bind(this)}>Importar</Text>
+                <Text style = { styles.buttonText } onPress = {this.cantidadImportada.bind(this)}>IMPORTAR</Text>
             </View>
       </TouchableOpacity>
-      <Text style = {styles.textImport}> Se importaron: {this.state.cantidadImportada} tarjetas</Text>
+      <Text style = {styles.textImport}> Se importaron: {this.state.cantidadImportada}</Text>
       <TouchableOpacity  onPress = {this.storeData.bind(this)}>
             <View style={styles.button}>
-                <Text style = { styles.buttonText } >Guardar tarjetas importadas</Text>
+                <Text style = { styles.buttonText } > GUARDAR </Text>
               </View>
       </TouchableOpacity>
   </View>
