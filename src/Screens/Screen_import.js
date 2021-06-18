@@ -6,12 +6,10 @@ import styles from '../styles/Styles';
 import {
   Text,
   View,
-  Button,
   TouchableOpacity,
   TextInput,
   FlatList,
   StyleSheet,
-  Alert,
 } from 'react-native';
 
 class Screen_Import extends Component {

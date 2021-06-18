@@ -46,14 +46,34 @@ async getData(){
         console.log(e)
         }
       }
+
+
+      borrarContacto(idTarjeta){
+        let resultado = this.state.apiActualizada.filter((usuarios)=>{
+        return usuarios.login.uuid !== idTarjeta
+        
+      })
+        this.setState({apiActualizada: resultado});
+    }
   
 renderItem = ({item}) => {
       return (
       <View style= {styles.tarjeta}>
+
+          <TouchableOpacity style={styles.borrar}onPress = {this.borrarContacto.bind(this)}>
+            <View >
+                <Text style = { styles.buttonText } onPress = {this.borrarContacto.bind(this)}>X</Text>
+            </View>
+         </TouchableOpacity>
           <Image style= {styles.imagen} source={{uri:  item.picture.medium }}/>
           <Text style= { styles.texto }> { item.name.first } { item.name.last } </Text>
           <Text style= { styles.texto }> { item.email } </Text>
           <Text style= { styles.texto }> {item.dob.date} ({ item.dob.age }) </Text>
+          <TouchableOpacity  >
+            <View style={styles.verDetalle}>
+                <Text style = { styles.buttonTextDetalle }> VER DETALLE </Text>
+              </View>
+         </TouchableOpacity>
       </View>
               )
   }

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Component } from 'react';
-import { Screen_ViewImportedCards } from './src/screens/Screen_ViewImportedCards';
-import { Screen_Import } from './src/screens/Screen_Import';
-import { Screen_AcercaDe } from './src/screens/Screen_AcercaDe';
-import { Screen_Papelera } from './src/screens/Screen_Papelera';
-import { Screen_ModificarTarjetas } from './src/screens/Screen_ModificarTarjetas';
+import { Screen_ViewImportedCards } from './src/Screens/Screen_ViewImportedCards';
+import { Screen_Import } from './src/Screens/Screen_Import';
+import { Screen_AcercaDe } from './src/Screens/Screen_AcercaDe';
+import { Screen_Papelera } from './src/Screens/Screen_Papelera';
+import { Screen_ModificarTarjetas } from './src/Screens/Screen_ModificarTarjetas';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import styles from './src/styles/Styles';
@@ -17,13 +17,14 @@ render() {
 
 return(
    <NavigationContainer>
-      <Drawer.Navigator drawerType= "slide" drawerPosition = "left" overlayColor = "violet" 
+      <Drawer.Navigator drawerType= "slide" drawerPosition = "left" overlayColor = "paleturquoise" 
       drawerStyle= { styles.drawerStyle }
        drawerContentOptions = {{
-        activeTintColor: "black",
-        activeBackgroundColor: "mistyrose",
-        inactiveBackgroundColor: "black",
-        itemStyle: {borderRadius: 50, backgroundColor: "mistyrose"}
+      activeTintColor: "black",
+      backgroundColor: "black",
+      activeBackgroundColor: "lightcyan",
+      inactiveBackgroundColor: "black",
+      itemStyle: {borderRadius: 50, backgroundColor: "lightcyan"}
       }}
      >
        <Drawer.Screen name = "Importar tarjetas" component = {Screen_Import} options = {{title: "Importar tarjetas"}}/>

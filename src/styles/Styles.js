@@ -4,7 +4,7 @@ const styles = StyleSheet.create ({
 
     view:{
       flex: 1, 
-      backgroundColor: "whitesmoke",
+      backgroundColor: "lightcyan",
       justifyContent: "center",
     },
 
@@ -25,12 +25,28 @@ const styles = StyleSheet.create ({
       backgroundColor: 'black',
       borderColor: 'white',
     },
+    verDetalle:{
+      padding:4,
+      margin:15,
+      borderStyle:"solid",
+      backgroundColor: 'paleturquoise',
+      borderColor: 'white',
+      borderRadius: 15,
+      
+    },
+    
 
     buttonText: {
       color: 'white',
       fontSize: 20,
       textAlign: "center",
     },
+    buttonTextDetalle :{ 
+    color: 'black',
+    fontSize: 20,
+    textAlign: "center",
+    padding:2,
+  },
 
     textImport: {
       fontSize: 17,
@@ -50,18 +66,22 @@ const styles = StyleSheet.create ({
     texto:{
         fontSize: 20,
         textAlign: "center",
+        color: 'white',
     },
 
     card:{
       height: 500, 
     },
 
-    tarjeta: {
-      borderWidth: 2,
-      backgroundColor: "lavender",
-      padding: 10,
-      margin: 5,
-      borderRadius: 30,
+    borrar:{
+      fontSize:18,
+      position:"absolute",
+      marginLeft:330,
+      padding:5,
+      borderRadius:30,
+      borderStyle:"solid",
+      backgroundColor: 'red',
+      borderColor: 'white',
     },
 
     nombres: {
@@ -73,6 +93,16 @@ const styles = StyleSheet.create ({
       backgroundColor: "whitesmoke",
       flex: 1,
       justifyContent: "center",
+    },
+    tarjeta:{ 
+      borderWidth:2,
+      borderStyle:"solid",
+      padding:10,
+      margin:10,
+      borderRadius:30,
+      backgroundColor:"grey",
+      
+
     },
 
     imagen: {
