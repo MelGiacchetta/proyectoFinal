@@ -2,17 +2,18 @@ import React from 'react';
 import { Component } from 'react';
 import { getData } from '../api/RandomUsers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Modal_verDetalle } from '../modals/Modal_verDetalle';
 import styles from '../styles/Styles';
 
 import {
   Text,
   View,
-  Button,
   TouchableOpacity,
-  StyleSheet,
   FlatList,
   Image,
+  TextInput,
 } from 'react-native';
+import { TapGestureHandler } from 'react-native-gesture-handler';
 
 
 class Screen_ViewImportedCards extends Component {
@@ -20,6 +21,8 @@ class Screen_ViewImportedCards extends Component {
       super(props);
       this.state = {
         apiActualizada: [],
+        comentario: "",
+        mostrarModal: false,
       }
     }
 
@@ -55,6 +58,10 @@ async getData(){
       })
         this.setState({apiActualizada: resultado});
     }
+    verDetalle(){
+      this.setState({ mostrarModal: !this.state.mostrarModal})
+      console.log("verDetalle" + this.state.mostrarModal)
+        }   
   
 renderItem = ({item}) => {
       return (
@@ -65,15 +72,17 @@ renderItem = ({item}) => {
                 <Text style = { styles.buttonText } onPress = {this.borrarContacto.bind(this)}>X</Text>
             </View>
          </TouchableOpacity>
-          <Image style= {styles.imagen} source={{uri:  item.picture.medium }}/>
+          <Image style= { styles.imagen } source={{uri:  item.picture.medium }}/>
           <Text style= { styles.texto }> { item.name.first } { item.name.last } </Text>
           <Text style= { styles.texto }> { item.email } </Text>
           <Text style= { styles.texto }> {item.dob.date} ({ item.dob.age }) </Text>
-          <TouchableOpacity  >
-            <View style={styles.verDetalle}>
-                <Text style = { styles.buttonTextDetalle }> VER DETALLE </Text>
-              </View>
-         </TouchableOpacity>
+          <View style= {styles.iconos}>
+            <Image style= { styles.iconoComentar } source={{uri: "https://cdn.icon-icons.com/icons2/1875/PNG/512/comment_120216.png" }}/>
+            <TouchableOpacity onPress={this.verDetalle.bind(this)}>
+              <Image style= { styles.iconoVerDetalle } source={{uri: "https://image.flaticon.com/icons/png/512/673/673132.png" }}/>
+            </TouchableOpacity>
+          </View>
+          <Modal_verDetalle showModal={this.state.mostrarModal}></Modal_verDetalle>
       </View>
               )
   }

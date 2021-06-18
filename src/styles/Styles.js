@@ -25,28 +25,12 @@ const styles = StyleSheet.create ({
       backgroundColor: 'black',
       borderColor: 'white',
     },
-    verDetalle:{
-      padding:4,
-      margin:15,
-      borderStyle:"solid",
-      backgroundColor: 'paleturquoise',
-      borderColor: 'white',
-      borderRadius: 15,
-      
-    },
-    
 
     buttonText: {
       color: 'white',
       fontSize: 20,
       textAlign: "center",
     },
-    buttonTextDetalle :{ 
-    color: 'black',
-    fontSize: 20,
-    textAlign: "center",
-    padding:2,
-  },
 
     textImport: {
       fontSize: 17,
@@ -66,7 +50,8 @@ const styles = StyleSheet.create ({
     texto:{
         fontSize: 20,
         textAlign: "center",
-        color: 'white',
+        color: 'black',
+        marginTop: 10,
     },
 
     card:{
@@ -90,19 +75,18 @@ const styles = StyleSheet.create ({
     },
 
     acercaDe: {
-      backgroundColor: "whitesmoke",
+      backgroundColor: "lightcyan",
       flex: 1,
       justifyContent: "center",
     },
+
     tarjeta:{ 
       borderWidth:2,
       borderStyle:"solid",
       padding:10,
       margin:10,
       borderRadius:30,
-      backgroundColor:"grey",
-      
-
+      backgroundColor:"lavender",
     },
 
     imagen: {
@@ -116,6 +100,43 @@ const styles = StyleSheet.create ({
       backgroundColor: "black",
       width: 250,
     },
+    
+    iconoComentar: {
+      width: 50,
+      height: 50,
+
+    },
+
+    iconoVerDetalle: {
+      width: 45,
+      height: 45,
+
+    },
+    
+    iconos: {
+      flexDirection: "row",
+      marginTop: 10,
+      alignSelf: "center"
+    },
+
+    modalContenedor: {
+      justifyContent: "center", 
+      alignItems: "center",
+      flex: 1,
+    },
+ 
+    verDetalle: {
+      fontSize: 30,
+      textAlign: "center",
+      backgroundColor: "lightcyan",
+      height: 250,
+      width: 400,
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 40,
+      borderWidth: 1,
+      borderStyle:"solid",
+    }
 })
 
 export default styles
