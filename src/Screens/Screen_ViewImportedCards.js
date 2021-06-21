@@ -3,6 +3,8 @@ import { Component } from 'react';
 import { getData } from '../api/RandomUsers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Modal_verDetalle } from '../modals/Modal_verDetalle';
+import { Modal_verComentarios } from '../modals/Modal_verComentarios';
+import { Screen_Papelera } from './Screen_Papelera';
 import styles from '../styles/Styles';
 
 import {
@@ -13,7 +15,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import { TapGestureHandler } from 'react-native-gesture-handler';
+
 
 
 class Screen_ViewImportedCards extends Component {
@@ -21,8 +23,11 @@ class Screen_ViewImportedCards extends Component {
       super(props);
       this.state = {
         apiActualizada: [],
-        comentario: "",
-        mostrarModal: false,
+        showModalDetalle: false,
+        showModalComentarios: false,
+        itemSeleccionado: null,
+        usuariosPapelera: [],
+        buscador: ""
       }
     }
 
@@ -36,12 +41,13 @@ class Screen_ViewImportedCards extends Component {
 //   this.unscribe();
 // }
 
+
 async getData(){
       try {
-        const resultado = await AsyncStorage.getItem("Api");
+        const resultado = await AsyncStorage.getItem("Usuarios");
         if (resultado !== null){
           this.setState({apiActualizada: JSON.parse(resultado)})
-          console.log(resultado)
+          
         } else {
           console.log("no hay usuarios guardados")
         }
@@ -49,40 +55,62 @@ async getData(){
         console.log(e)
         }
       }
-
-
-      borrarContacto(idTarjeta){
-        let resultado = this.state.apiActualizada.filter((usuarios)=>{
-        return usuarios.login.uuid !== idTarjeta
-        
-      })
-        this.setState({apiActualizada: resultado});
+      
+      borrarContacto(item){
+        // let usuariosPapelera = this.state.usuariosPapelera.push(item)
+        let usuarios = this.state.apiActualizada.filter((usuarios)=>{
+          return usuarios !== item
+              })
+        this.setState({apiActualizada: usuarios})
+        // usuariosPapelera: usuariosPapelera
+        // console.log(this.state.usuariosPapelera)
     }
-    verDetalle(){
-      this.setState({ mostrarModal: !this.state.mostrarModal})
-      console.log("verDetalle" + this.state.mostrarModal)
+
+    verDetalle(item){
+      this.setState({ showModalDetalle: !this.state.showModalDetalle, itemSeleccionado: item })
         }   
+
+    verComentarios(item){
+      this.setState({ showModalComentarios: !this.state.showModalComentarios, itemSeleccionado: item })
+    }
+
+    buscar(){
+      let valorInput = this.state.buscador.toLowerCase()
+      let resultado = this.state.apiActualizada.filter((api)=>{
+        return api.name.first.toLowerCase().includes(valorInput) 
+            || api.name.last.toLowerCase().includes(valorInput) 
+            || api.location.country.toLowerCase().includes(valorInput)
+            || api.location.city.toLowerCase().includes(valorInput)
+      });
+      this.setState({apiActualizada: resultado});
+      console.log(this.state.apiActualizada)
+
+    }
   
 renderItem = ({item}) => {
+  
       return (
-      <View style= {styles.tarjeta}>
+      <View style= { styles.tarjeta }>
 
-          <TouchableOpacity style={styles.borrar}onPress = {this.borrarContacto.bind(this)}>
+          <TouchableOpacity style={ styles.borrar } onPress = { this.borrarContacto.bind(this, item) }>
             <View >
-                <Text style = { styles.buttonText } onPress = {this.borrarContacto.bind(this)}>X</Text>
+                <Text style = { styles.buttonText }>X</Text>
             </View>
          </TouchableOpacity>
-          <Image style= { styles.imagen } source={{uri:  item.picture.medium }}/>
+          <Image style= { styles.imagen } source={{ uri:  item.picture.medium }}/>
           <Text style= { styles.texto }> { item.name.first } { item.name.last } </Text>
           <Text style= { styles.texto }> { item.email } </Text>
-          <Text style= { styles.texto }> {item.dob.date} ({ item.dob.age }) </Text>
-          <View style= {styles.iconos}>
+          <Text style= { styles.texto }> { item.dob.date } ({ item.dob.age }) </Text>
+          <View style= { styles.iconos }>
+            <TouchableOpacity onPress= {this.verComentarios.bind(this, item)}>
             <Image style= { styles.iconoComentar } source={{uri: "https://cdn.icon-icons.com/icons2/1875/PNG/512/comment_120216.png" }}/>
-            <TouchableOpacity onPress={this.verDetalle.bind(this)}>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.verDetalle.bind(this, item)}>
               <Image style= { styles.iconoVerDetalle } source={{uri: "https://image.flaticon.com/icons/png/512/673/673132.png" }}/>
             </TouchableOpacity>
           </View>
-          <Modal_verDetalle showModal={this.state.mostrarModal}></Modal_verDetalle>
+          <Modal_verDetalle showModalDetalle = {this.state.showModalDetalle} itemSeleccionado = {this.state.itemSeleccionado} ></Modal_verDetalle>
+          <Modal_verComentarios showModalComentarios = {this.state.showModalComentarios} itemSeleccionado = {this.state.itemSeleccionado}></Modal_verComentarios>
       </View>
               )
   }
@@ -93,8 +121,16 @@ keyExtractor = (item, idx) => idx.toString();
 
         return(
             <View style = { styles.view }> 
-              <Text style={ styles.title }> USUARIOS </Text>
-              <View>
+            <View style = {styles.secondView}>
+              <Text style={ styles.title }> USUARIOS IMPORTADOS</Text>
+              <TextInput style={styles.input} onChangeText={text => this.setState({buscador: text})} placeholder="Buscar..."></TextInput>
+              <TouchableOpacity style = {styles.button} onPress = {this.buscar.bind(this)}>
+                <Text style={styles.buttonText}>
+                  BUSCAR
+                </Text>
+              </TouchableOpacity>
+            <View>
+              </View>
               <FlatList style= {styles.card}
                       data = {this.state.apiActualizada}
                       keyExtractor = {this.keyExtractor}
@@ -104,7 +140,7 @@ keyExtractor = (item, idx) => idx.toString();
               <TouchableOpacity  onPress={ this.getData.bind(this) }>
                 <View style = { styles.button }> 
                   <Text style = { styles.buttonText }>
-                    RECUPERAR
+                    VER USUARIOS IMPORTADOS
                   </Text>
                 </View>
               </TouchableOpacity>

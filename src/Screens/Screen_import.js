@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   TextInput,
   Animated,
+  FlatList,
+  Image,
 } from 'react-native';
 
 class Screen_Import extends Component {
@@ -19,6 +21,8 @@ class Screen_Import extends Component {
        api: [],
        cantidadElegida: 0,
        cantidadImportada: 0,
+       tarjetasImportadas: [],
+       
       }
     }
 
@@ -26,38 +30,79 @@ class Screen_Import extends Component {
 //   await AsyncStorage.removeItem("Api")
 //    }
 
-async storeData(){
-        try{
-            let resultado = await AsyncStorage.getItem("Api");
-            resultado = JSON.parse(resultado)
-            if (resultado == null) resultado = []
-            this.state.api.map(data=>{ 
-              resultado.push(data)
-            })
-            const jsonApi = JSON.stringify(resultado);
-            await AsyncStorage.setItem("Api", jsonApi);
-            console.log(resultado);
-          // Alert.alert("Datos guardados correctamente.");
-        }
-        catch(e){
-            console.log(e)
-        }
+// async storeData(){
+//         try{
+  
+//             let resultado = await AsyncStorage.getItem('item');
+//             console.log(resultado)
+//             resultado = JSON.parse(resultado)
+//             if (resultado == null) resultado = []
+//             this.state.tarjetasImportadas.map(data=>{ 
+//               resultado.push(data)
+//             })
+//             const jsonApi = JSON.stringify(resultado);
+//             await AsyncStorage.setItem('item', jsonApi);
+           
+//           // Alert.alert("Datos guardados correctamente.");
+//         }
+//         catch(e){
+//             console.log(e)
+//         }
+//     }
+
+    async storeData(item){
+      let tarjetasImportadas = this.state.tarjetasImportadas
+      tarjetasImportadas.push(item)
+
+      let usuariosNoImportados = this.state.api.filter((usuarios)=>{
+        return usuarios !== item
+      })
+
+      this.setState({tarjetasImportadas: tarjetasImportadas, api: usuariosNoImportados})
+     
+      try{
+        
+        const jsonTarjetasImportadas = JSON.stringify(this.state.tarjetasImportadas);
+        await AsyncStorage.setItem("Usuarios", jsonTarjetasImportadas);
+       
+       
+        
+      // Alert.alert("Datos guardados correctamente.");
     }
-
-
-importarTarjetas(){
-      fetch("https://randomuser.me/api/?results=" + this.state.cantidadElegida)
-        .then(result => result.json())
-        .then(data =>{
-            console.log(data.results.length)
-            this.setState({api: data.results })
-        })
-        .catch((e) => console.log(e))
+    catch(e){
+        console.log(e)
     }
+    
+  }
 
-cantidadImportada(){
-  this.setState ({cantidadImportada: this.state.cantidadElegida})
+  //   async importar(){
+  //     try{
+  //         const result = await AsyncStorage.getItem('usuario')
+  //         this.setState({tarjetasImportadas: JSON.parse(result)})
+  //         console.log(this.state.tarjetasImportadas)
+  //     } catch(e){
+  //         console.log(e);
+  //     }
+
+  // }
+
+verTarjetas(){
+  fetch("https://randomuser.me/api/?results=" + this.state.cantidadElegida)
+  .then(result => result.json())
+  .then(data =>{
+      this.setState({api: data.results, cantidadImportada: this.state.cantidadElegida})
+
+  })
+  .catch((e) => console.log(e))
 }
+
+// importarTarjeta(idTarjeta){
+//   let tarjetasImportadas = this.state.tarjetasImportadas.push(()=>{
+//     return this.state.api.login.uuid === idTarjeta
+//     })
+//     this.setState({tarjetasImportadas: tarjetasImportadas})
+//     console.log(tarjetasImportadas)
+//   }
 
 // position = new Animated.Value(0);
 // rotation = new Animated.Value(0);
@@ -88,6 +133,23 @@ cantidadImportada(){
             }
             }>
 </Animated.View> */
+renderItem = ({item}) => {
+  return (
+  <View style= {styles.tarjeta}>
+      <Image style= { styles.imagen } source={{uri:  item.picture.medium }}/>
+      <Text style= { styles.texto }> { item.name.first } { item.name.last } </Text>
+      <Text style= { styles.texto }> { item.email } </Text>
+      <Text style= { styles.texto }> {item.dob.date} ({ item.dob.age }) </Text>
+      <TouchableOpacity style={styles.button} onPress={this.storeData.bind(this, item)} >
+        <Text style={styles.buttonText}>
+          IMPORTAR
+        </Text>
+      </TouchableOpacity>
+  </View>
+          )
+}
+
+keyExtractor = (item, idx) => idx.toString();
 
 render() {
   // const rot = this.rotation.interpolate({
@@ -98,20 +160,32 @@ render() {
 return(
   
   <View style = {styles.view}>
-      <Text style={styles.title}>¿Cuántas tarjetas deseas importar?</Text>
-      <TextInput style={styles.input} onChangeText={text => this.setState({cantidadElegida : text})}></TextInput>
+    <View style = {styles.secondView}>
+      <Text style={styles.title}>¿Cuántas tarjetas deseas ver?</Text>
+      <TextInput style={styles.input} onChangeText={text => this.setState({cantidadElegida : text})} placeholder="Cantidad de usuarios que quiero ver..."></TextInput>
       
-        <TouchableOpacity onPress = {this.importarTarjetas.bind(this)}>
+        {/* <TouchableOpacity onPress = {this.importarTarjetas.bind(this)}>
             <View style={styles.button}>
                 <Text style = { styles.buttonText } onPress = {this.cantidadImportada.bind(this)}>IMPORTAR</Text>
             </View>
+        </TouchableOpacity> */}
+        <TouchableOpacity style= {styles.button} onPress={this.verTarjetas.bind(this)}>
+          <Text style= {styles.buttonText}>VER</Text>
         </TouchableOpacity>
-      <Text style = {styles.textImport}> Se importaron: {this.state.cantidadImportada}</Text>
-      <TouchableOpacity  onPress = {this.storeData.bind(this)}>
+      <Text style = {styles.textImportVisibles}> USUARIOS VISIBLES: {this.state.api.length}</Text>
+      <FlatList style= {styles.card}
+                      data = {this.state.api}
+                      keyExtractor = {this.keyExtractor}
+                      renderItem = {this.renderItem}
+      />
+     
+      {/* <TouchableOpacity  onPress = {this.storeData.bind(this)}>
             <View style={styles.button}>
                 <Text style = { styles.buttonText } > GUARDAR </Text>
               </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      <Text style = {styles.textImportImportados}> USUARIOS IMPORTADOS: {this.state.tarjetasImportadas.length}</Text>
+      </View>
   </View>
 )}
 

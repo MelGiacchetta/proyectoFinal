@@ -7,6 +7,9 @@ const styles = StyleSheet.create ({
       backgroundColor: "lightcyan",
       justifyContent: "center",
     },
+    secondView: {
+      top: 25
+    },
 
     title: {
       fontSize: 30,
@@ -32,9 +35,16 @@ const styles = StyleSheet.create ({
       textAlign: "center",
     },
 
-    textImport: {
-      fontSize: 17,
+    textImportVisibles: {
+      fontSize: 20,
       textAlign: "center",
+    },
+
+    textImportImportados: {
+      fontSize: 20,
+      textAlign: "center",
+      bottom: 20,
+      backgroundColor: "lightcyan"
     },
 
     input:{
@@ -45,6 +55,7 @@ const styles = StyleSheet.create ({
         paddingTop: 10,
         paddingBottom: 10, 
         fontSize: 20,
+        textAlign: "center",
     },
 
     texto:{
@@ -125,7 +136,7 @@ const styles = StyleSheet.create ({
       flex: 1,
     },
  
-    verDetalle: {
+    verModal: {
       fontSize: 30,
       textAlign: "center",
       backgroundColor: "lightcyan",
