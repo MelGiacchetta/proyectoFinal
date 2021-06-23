@@ -7,6 +7,7 @@ const styles = StyleSheet.create ({
       backgroundColor: "lightcyan",
       justifyContent: "center",
     },
+
     secondView: {
       top: 25
     },
@@ -16,6 +17,7 @@ const styles = StyleSheet.create ({
       justifyContent: 'center',
       textAlign: 'center',
       fontWeight: 'bold',
+      margin: 20,
     },
 
     button:{
@@ -80,11 +82,6 @@ const styles = StyleSheet.create ({
       borderColor: 'white',
     },
 
-    nombres: {
-      textAlign: "center",
-      fontSize: 25,
-    },
-
     acercaDe: {
       backgroundColor: "lightcyan",
       flex: 1,
@@ -100,11 +97,12 @@ const styles = StyleSheet.create ({
       backgroundColor:"lavender",
     },
 
-    imagen: {
+    imagen:{
       width: 100,
       height: 100,
-      alignSelf: "center",
       borderRadius: 100,
+      flex: 1,
+      aligSelf: "center",
     },
 
     drawerStyle : {
@@ -159,6 +157,40 @@ const styles = StyleSheet.create ({
       backgroundColor: 'red',
       borderColor: 'white',
     },
+
+    programacion: {
+      textAlign: "center",
+      fontSize: 25,
+      fontWeight: "bold",
+      margin: 25,
+      fontStyle: "italic",
+    },
+
+    nombres: {
+      fontSize: 14,
+      textAlign: "center",
+      margin: 20,
+    },
+
+    introduccion: {
+      fontSize: 18,
+      textAlign: "center",
+      margin: 20,
+    },
+
+    iconosAcercaDe: {
+      width: 150,
+      height: 150,
+      flexDirection: "row",
+      marginTop: 10,
+      alignSelf: "center",
+    },
+    
+    nosotras: {
+      fontSize: 40,
+      textAlign: "center",
+      fontWeight: "bold",
+    }
 
 })
 

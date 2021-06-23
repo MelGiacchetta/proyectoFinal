@@ -4,7 +4,6 @@ import { getData } from '../api/RandomUsers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Modal_verDetalle } from '../modals/Modal_verDetalle';
 import { Modal_verComentarios } from '../modals/Modal_verComentarios';
-import { Screen_Papelera } from './Screen_Papelera';
 import styles from '../styles/Styles';
 
 import {
@@ -14,6 +13,7 @@ import {
   FlatList,
   Image,
   TextInput,
+  Animated,
 } from 'react-native';
 
 
@@ -28,7 +28,8 @@ class Screen_ViewImportedCards extends Component {
         itemSeleccionado: null,
         usuariosPapelera: [],
         buscador: "",
-        showBotonBorrar: true
+        showBotonBorrar: true,
+        toValue: 300,
       }
     }
 
@@ -99,6 +100,16 @@ async getData(){
     cerrarDetalle(){
       this.setState({showModalDetalle: false})
     }
+
+    agrandarImagen(){
+      Animated.timing(this.position, {
+          toValue: this.state.toValue,
+          duration: 2000,
+          useNativeDriver: false,
+      }).start()
+      this.setState({toValue : this.state.toValue == 100 ? 300 : 100})
+      console.log(this.position)
+    }
   
 renderItem = ({item}) => {
   
@@ -108,7 +119,8 @@ renderItem = ({item}) => {
           <TouchableOpacity style={ styles.borrar } onPress = { this.storeUsuariosBorrados.bind(this, item) }>
                 <Text style = { styles.buttonText }>X</Text>
          </TouchableOpacity>
-          <Image style= { styles.imagen } source={{ uri:  item.picture.medium }}/>
+          <Animated.Image style= {styles.imagen } 
+            source={{ uri:  item.picture.medium }} onLongPress = {this.agrandarImagen.bind(this)}/>
           <Text style= { styles.texto }> { item.name.first } { item.name.last } </Text>
           <Text style= { styles.texto }> { item.email } </Text>
           <Text style= { styles.texto }> { item.dob.date } ({ item.dob.age }) </Text>
@@ -127,6 +139,8 @@ renderItem = ({item}) => {
   }
   
 keyExtractor = (item, idx) => idx.toString();
+
+position = new Animated.Value(100)
 
   render() {
 
