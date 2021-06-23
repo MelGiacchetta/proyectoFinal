@@ -7,15 +7,13 @@ class Modal_verDetalle extends Component {
     constructor(props){
         super(props);
         this.state = {
-         mostrarModal: this.props.showModalDetalle,
          itemSeleccionado: null,
         }
       }
 
-
 render() {
 return(
-   <Modal visible= {this.state.mostrarModal} animationType= "slide" transparent= {true} >
+   <Modal visible= {this.props.showModalDetalle} animationType= "fade" transparent= {true} >
        <View style= {styles.modalContenedor}>
            <View style= {styles.verModal}>
              <Text> {this.state.itemSeleccionado && this.state.itemSeleccionado.location.street.name} {this.state.itemSeleccionado && this.state.itemSeleccionado.location.street.number} </Text>

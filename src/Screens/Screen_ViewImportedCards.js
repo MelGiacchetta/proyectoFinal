@@ -27,7 +27,8 @@ class Screen_ViewImportedCards extends Component {
         showModalComentarios: false,
         itemSeleccionado: null,
         usuariosPapelera: [],
-        buscador: ""
+        buscador: "",
+        showBotonBorrar: true
       }
     }
 
@@ -40,7 +41,6 @@ class Screen_ViewImportedCards extends Component {
 // componentWillUnmount() {
 //   this.unscribe();
 // }
-
 
 async getData(){
       try {
@@ -56,14 +56,23 @@ async getData(){
         }
       }
       
-      borrarContacto(item){
-        // let usuariosPapelera = this.state.usuariosPapelera.push(item)
-        let usuarios = this.state.apiActualizada.filter((usuarios)=>{
-          return usuarios !== item
-              })
-        this.setState({apiActualizada: usuarios})
-        // usuariosPapelera: usuariosPapelera
-        // console.log(this.state.usuariosPapelera)
+    async storeUsuariosBorrados(item){
+      let usuarios = this.state.apiActualizada.filter((usuarios)=>{
+        return usuarios !== item
+            })
+
+      let usuariosPapelera = this.state.usuariosPapelera
+      usuariosPapelera.push(item)
+      
+      this.setState({apiActualizada: usuarios, usuariosPapelera: usuariosPapelera})
+
+        try{
+          const jsonUsuariosBorrados = JSON.stringify(this.state.usuariosPapelera);
+          await AsyncStorage.setItem("UsuariosBorrados", jsonUsuariosBorrados);
+       }
+       catch(e){
+          console.log(e)
+      }
     }
 
     verDetalle(item){
@@ -86,16 +95,18 @@ async getData(){
       console.log(this.state.apiActualizada)
 
     }
+
+    cerrarDetalle(){
+      this.setState({showModalDetalle: false})
+    }
   
 renderItem = ({item}) => {
   
       return (
       <View style= { styles.tarjeta }>
 
-          <TouchableOpacity style={ styles.borrar } onPress = { this.borrarContacto.bind(this, item) }>
-            <View >
+          <TouchableOpacity style={ styles.borrar } onPress = { this.storeUsuariosBorrados.bind(this, item) }>
                 <Text style = { styles.buttonText }>X</Text>
-            </View>
          </TouchableOpacity>
           <Image style= { styles.imagen } source={{ uri:  item.picture.medium }}/>
           <Text style= { styles.texto }> { item.name.first } { item.name.last } </Text>
@@ -109,7 +120,7 @@ renderItem = ({item}) => {
               <Image style= { styles.iconoVerDetalle } source={{uri: "https://image.flaticon.com/icons/png/512/673/673132.png" }}/>
             </TouchableOpacity>
           </View>
-          <Modal_verDetalle showModalDetalle = {this.state.showModalDetalle} itemSeleccionado = {this.state.itemSeleccionado} ></Modal_verDetalle>
+          <Modal_verDetalle showModalDetalle = {this.state.showModalDetalle} cerrarDetalle={this.cerrarDetalle.bind(this)} itemSeleccionado = {this.state.itemSeleccionado} ></Modal_verDetalle>
           <Modal_verComentarios showModalComentarios = {this.state.showModalComentarios} itemSeleccionado = {this.state.itemSeleccionado}></Modal_verComentarios>
       </View>
               )
@@ -140,7 +151,7 @@ keyExtractor = (item, idx) => idx.toString();
               <TouchableOpacity  onPress={ this.getData.bind(this) }>
                 <View style = { styles.button }> 
                   <Text style = { styles.buttonText }>
-                    VER USUARIOS IMPORTADOS
+                    ACTUALIZAR USUARIOS IMPORTADOS
                   </Text>
                 </View>
               </TouchableOpacity>

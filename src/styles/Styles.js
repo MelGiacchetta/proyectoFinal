@@ -147,7 +147,19 @@ const styles = StyleSheet.create ({
       borderRadius: 40,
       borderWidth: 1,
       borderStyle:"solid",
-    }
+    },
+
+    borrarPapelera: {
+      fontSize:18,
+      textAlign:"center",
+      padding:4,
+      margin:10,
+      borderRadius:30,
+      borderStyle:"solid",
+      backgroundColor: 'red',
+      borderColor: 'white',
+    },
+
 })
 
 export default styles

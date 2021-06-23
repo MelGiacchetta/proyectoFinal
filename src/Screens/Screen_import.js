@@ -64,9 +64,6 @@ class Screen_Import extends Component {
         
         const jsonTarjetasImportadas = JSON.stringify(this.state.tarjetasImportadas);
         await AsyncStorage.setItem("Usuarios", jsonTarjetasImportadas);
-       
-       
-        
       // Alert.alert("Datos guardados correctamente.");
     }
     catch(e){
