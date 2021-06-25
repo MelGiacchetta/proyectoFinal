@@ -39,6 +39,7 @@ class Screen_ViewImportedCards extends Component {
 // componentWillUnmount() {
 //   this.unscribe();
 // }
+
 async getData(){
   
       try {
@@ -119,51 +120,20 @@ async getData(){
             || api.location.city.toLowerCase().includes(valorInput)
       });
       this.setState({apiActualizada: resultado});
-      console.log(this.state.apiActualizada)
-
     }
 
     cerrarDetalle(tarjeta){
       this.setState({showModalDetalle: false, itemSeleccionado: tarjeta})
     }
-    
-    // async storeComentario(comentario){
-    //   this.setState({comentarios: this.state.comentarios.push(comentario)})
-    //   try{
-    //     const jsonComentarios = JSON.stringify(this.state.comentarios);
-    //     await AsyncStorage.setItem("Comentarios", jsonComentarios);
-    //   }
-    //   catch(e){
-    //     console.log(e)
-    //   }
-    // }
-
-    // async getComentario(comentario){
-    //   let comentarios = this.state.comentarios.filter((comentario)=>{
-    //       return comentarios == comentario
-    //   })
-    //   try {
-    //     const comentarios = await AsyncStorage.getItem("Comentarios");
-    //     if (comentarios !== null){
-    //       this.setState({comentarios: JSON.parse(comentarios)})
-          
-    //     } else {
-    //       console.log("no hay comentarios")
-    //     }
-    //     } catch(e){
-    //     console.log(e)
-    //     }
-    // } 
 
 renderItem = ({item}) => {
   
       return (
-      <TarjetasViewImportedCards item = {item}  
+      <TarjetasViewImportedCards 
+                          item = {item}  
                           cerrarDetalle = {this.cerrarDetalle.bind(this, item)}
                           verDetalle = {this.verDetalle.bind(this, item)}
                           storeUsuariosBorrados = {this.storeUsuariosBorrados.bind(this, item)}
-                          // storeComentarios = {this.storeComentarios.bind(this, item)}
-                          // getComentarios = {this.getComentarios.bind(this, item)}
                           >                 
       </TarjetasViewImportedCards>
               )
@@ -192,11 +162,6 @@ keyExtractor = (item, idx) => idx.toString();
                       keyExtractor = {this.keyExtractor}
                       renderItem = {this.renderItem}
               />
-              {/* <TextInput placeholder="agregar comentario..." onChange={(comentario) => this.storeComentario.bind(this, comentario)}>
-          </TextInput>
-          <TouchableOpacity onPress={this.getComentario.bind(this, comentario)}>
-            <Text>Guardar comentario</Text>
-          </TouchableOpacity> */}
               </View>
               <TouchableOpacity onPress={ this.getData.bind(this) }>
                 <View style = { styles.button }> 
@@ -207,10 +172,7 @@ keyExtractor = (item, idx) => idx.toString();
               </TouchableOpacity>
               <Modal_verDetalle showModalDetalle = {this.state.showModalDetalle} cerrarDetalle={this.cerrarDetalle.bind(this, this.state.itemSeleccionado)} itemSeleccionado = {this.state.itemSeleccionado} ></Modal_verDetalle>
             </View>
- 
-        )
-
-        }
+        )}
         
 }
 

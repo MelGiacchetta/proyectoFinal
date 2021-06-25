@@ -45,7 +45,7 @@ const styles = StyleSheet.create ({
     textImportImportados: {
       fontSize: 20,
       textAlign: "center",
-      bottom: 20,
+      bottom: 80,
       backgroundColor: "lightcyan"
     },
 

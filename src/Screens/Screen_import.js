@@ -87,7 +87,7 @@ return(
   <View style = {styles.view}>
     <View style = {styles.secondView}>
       <Text style={styles.title}>¿Cuántas tarjetas deseas ver?</Text>
-      <TextInput style={styles.input} onChangeText={text => this.setState({cantidadElegida : text})} placeholder="Cantidad de usuarios que quiero ver..."></TextInput>
+      <TextInput style={styles.input} onChangeText={text => this.setState({cantidadElegida: text})} placeholder="Cantidad de usuarios que quiero ver..."></TextInput>
         <TouchableOpacity style= {styles.button} 
                           onPress={this.verTarjetas.bind(this)}>
           <Text style= {styles.buttonText}>VER</Text>

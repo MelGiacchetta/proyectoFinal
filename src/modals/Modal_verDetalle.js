@@ -15,15 +15,20 @@ class Modal_verDetalle extends Component {
             this.state={
                 comentarios: [], 
                 text: null,
+                item: null,
             }
     this.storeInformacion = this.storeInformacion.bind(this)
     }
-async storeInformacion(){
 
+async storeInformacion(item){
+
+    
         let comentarios = this.state.comentarios
         comentarios.push(this.state.text + " ")
+        
             this.setState({comentarios: comentarios})
-
+            console.log(this.state.comentarios)
+    
             try{
                 const jsonComentarios = JSON.stringify(this.state.comentarios);
                 await AsyncStorage.setItem("Comentarios", jsonComentarios);
@@ -31,11 +36,11 @@ async storeInformacion(){
             }catch(e){
                 console.log(e)
             }
-    
+        
 }
 
 async getInformacion(comentariosGuardados){
-    
+   
       let comentarios = this.state.comentarios.filter((comentario)=>{
           return comentariosGuardados == comentarios
       })
@@ -71,9 +76,14 @@ return(
              <Text style={styles.comentarios}>{this.props.itemSeleccionado && this.state.comentarios}</Text>
           <TextInput style = {styles.comentarInput} onChangeText={value => this.setState({text: value})} placeholder="Agregar información...">
           </TextInput>
-          <TouchableOpacity onPress={this.storeInformacion.bind(this, this.props.itemSeleccionado)}>
+          <TouchableOpacity onPress={this.storeInformacion.bind(this)}>
             <Text>
                 Agregar información
+            </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this.getInformacion.bind(this)}>
+            <Text>
+                Actualizar comentarios
             </Text>
         </TouchableOpacity>
            </View>

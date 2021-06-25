@@ -94,11 +94,6 @@ return(
                Actualizar contactos borrados
             </Text>
          </TouchableOpacity>
-         <TouchableOpacity style={styles.button} onPress={this.restaurar.bind(this)}>
-            <Text style={styles.buttonText}>
-               RESTAURAR TODAS
-            </Text>
-         </TouchableOpacity>
    </View>
 
 )

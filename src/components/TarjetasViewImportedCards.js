@@ -35,9 +35,6 @@ class TarjetasImportadas extends Component {
     
     }
 
-    
-
-
 render(){
     return(
     <View style= { styles.tarjeta }>   
@@ -53,18 +50,13 @@ render(){
         <Text style= { styles.texto }> { this.props.item.email } </Text>
         <Text style= { styles.texto }> { this.props.item.dob.date } ({ this.props.item.dob.age }) </Text>
         <View style= { styles.iconos }>
-          <TouchableOpacity onPress= {this.props.verComentarios}>
-          <Image style= { styles.iconoComentar } source={{uri: "https://cdn.icon-icons.com/icons2/1875/PNG/512/comment_120216.png" }}/>
-          </TouchableOpacity>
           <TouchableOpacity onPress={this.props.verDetalle}>
             <Image style= { styles.iconoVerDetalle } source={{uri: "https://image.flaticon.com/icons/png/512/673/673132.png" }}/>
           </TouchableOpacity>
           <TouchableOpacity style={ styles.borrarPapelera } onPress = { this.props.storeUsuariosBorrados }> 
               <Text style = { styles.buttonText }>BORRAR</Text>
           </TouchableOpacity>
-          <Text></Text>
-          
-          
+          <Text></Text> 
       </View>
         </View> 
     </View>

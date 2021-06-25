@@ -29,7 +29,6 @@ return(
      >
        <Drawer.Screen name = "Importar tarjetas" component = {Screen_Import} options = {{title: "Importar tarjetas"}}/>
        <Drawer.Screen name = "Ver tarjetas importadas" component = {Screen_ViewImportedCards} options = {{title: "Tarjetas importadas"}}/>
-       <Drawer.Screen name = "Modificar tarjetas" component = {Screen_ModificarTarjetas} options = {{title: "Modificar tarjetas"}}/>
        <Drawer.Screen name = "Papelera de reciclaje" component = {Screen_Papelera} options = {{title: "Papelera de reciclaje"}}/>
        <Drawer.Screen name = "Acerca de ..." component = {Screen_AcercaDe} options = {{title: "Acerca de"}}/>
        </Drawer.Navigator>
