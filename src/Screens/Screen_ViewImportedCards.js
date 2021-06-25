@@ -1,10 +1,9 @@
 import React from 'react';
 import { Component } from 'react';
-import { getData } from '../api/RandomUsers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Modal_verDetalle } from '../modals/Modal_verDetalle';
-import { Modal_verComentarios } from '../modals/Modal_verComentarios';
 import styles from '../styles/Styles';
+import TarjetasViewImportedCards from '../components/TarjetasViewImportedCards'
 
 import {
   Text,
@@ -14,9 +13,8 @@ import {
   Image,
   TextInput,
   Animated,
+  Easing,
 } from 'react-native';
-
-
 
 class Screen_ViewImportedCards extends Component {
     constructor(props){
@@ -24,13 +22,12 @@ class Screen_ViewImportedCards extends Component {
       this.state = {
         apiActualizada: [],
         showModalDetalle: false,
-        showModalComentarios: false,
         itemSeleccionado: null,
         usuariosPapelera: [],
         buscador: "",
         showBotonBorrar: true,
-        toValue: 300,
-      }
+        usuariosBorradosDefinitivamente: [],
+        }
     }
 
 // componentDidMount() {
@@ -42,12 +39,15 @@ class Screen_ViewImportedCards extends Component {
 // componentWillUnmount() {
 //   this.unscribe();
 // }
-
 async getData(){
+  
       try {
-        const resultado = await AsyncStorage.getItem("Usuarios");
-        if (resultado !== null){
-          this.setState({apiActualizada: JSON.parse(resultado)})
+        let usuariosBorrados = this.state.usuariosPapelera
+        this.setState({apiActualizada: this.state.apiActualizada.splice(usuariosBorrados, 1)})
+
+        const usuarios = await AsyncStorage.getItem("Usuarios");
+        if (usuarios !== null){
+          this.setState({apiActualizada: JSON.parse(usuarios)})
           
         } else {
           console.log("no hay usuarios guardados")
@@ -56,33 +56,59 @@ async getData(){
         console.log(e)
         }
       }
-      
+
+      // async getData(){
+  
+      //   try {
+          
+      //     const usuarios = await AsyncStorage.getItem("Usuarios");
+          
+      //     const usuariosBorradosDefinitivamente = await AsyncStorage.getItem("UsuariosBorradosDefinitivamente");
+
+      //     if (usuarios !== null && usuariosBorradosDefinitivamente !== null){
+
+      //       let usuarios = this.state.apiActualizada.filter((usuarios)=>{
+      //         return usuarios !== this.state.usuariosBorradosDefinitivamente
+      //       })
+
+      //       this.setState({usuariosBorradosDefinitivamente: JSON.parse(usuariosBorradosDefinitivamente)})
+      //       this.setState({apiActualizada: JSON.parse(usuarios)})
+
+      //       console.log(this.state.usuariosBorradosDefinitivamente)
+      //     }        
+      //      else {
+      //       console.log("no hay usuarios guardados")
+      //     }}
+      //      catch(e){
+      //     console.log(e)
+      //     }
+      //   }  
+
     async storeUsuariosBorrados(item){
-      let usuarios = this.state.apiActualizada.filter((usuarios)=>{
-        return usuarios !== item
-            })
-
-      let usuariosPapelera = this.state.usuariosPapelera
-      usuariosPapelera.push(item)
-      
-      this.setState({apiActualizada: usuarios, usuariosPapelera: usuariosPapelera})
-
+    
         try{
+
+          let usuarios = this.state.apiActualizada.filter((usuarios)=>{
+            return usuarios !== item
+                })
+    
+          let usuariosPapelera = this.state.usuariosPapelera
+          usuariosPapelera.push(item)
+          
+          this.setState({apiActualizada: usuarios, usuariosPapelera: usuariosPapelera})
           const jsonUsuariosBorrados = JSON.stringify(this.state.usuariosPapelera);
           await AsyncStorage.setItem("UsuariosBorrados", jsonUsuariosBorrados);
+         
        }
        catch(e){
           console.log(e)
       }
     }
 
-    verDetalle(item){
-      this.setState({ showModalDetalle: !this.state.showModalDetalle, itemSeleccionado: item })
+    verDetalle(usuario){
+      this.setState({ showModalDetalle: !this.state.showModalDetalle, itemSeleccionado: usuario })
+      console.log(this.state.itemSeleccionado)
         }   
-
-    verComentarios(item){
-      this.setState({ showModalComentarios: !this.state.showModalComentarios, itemSeleccionado: item })
-    }
 
     buscar(){
       let valorInput = this.state.buscador.toLowerCase()
@@ -97,55 +123,59 @@ async getData(){
 
     }
 
-    cerrarDetalle(){
-      this.setState({showModalDetalle: false})
+    cerrarDetalle(tarjeta){
+      this.setState({showModalDetalle: false, itemSeleccionado: tarjeta})
     }
+    
+    // async storeComentario(comentario){
+    //   this.setState({comentarios: this.state.comentarios.push(comentario)})
+    //   try{
+    //     const jsonComentarios = JSON.stringify(this.state.comentarios);
+    //     await AsyncStorage.setItem("Comentarios", jsonComentarios);
+    //   }
+    //   catch(e){
+    //     console.log(e)
+    //   }
+    // }
 
-    agrandarImagen(){
-      Animated.timing(this.position, {
-          toValue: this.state.toValue,
-          duration: 2000,
-          useNativeDriver: false,
-      }).start()
-      this.setState({toValue : this.state.toValue == 100 ? 300 : 100})
-      console.log(this.position)
-    }
-  
+    // async getComentario(comentario){
+    //   let comentarios = this.state.comentarios.filter((comentario)=>{
+    //       return comentarios == comentario
+    //   })
+    //   try {
+    //     const comentarios = await AsyncStorage.getItem("Comentarios");
+    //     if (comentarios !== null){
+    //       this.setState({comentarios: JSON.parse(comentarios)})
+          
+    //     } else {
+    //       console.log("no hay comentarios")
+    //     }
+    //     } catch(e){
+    //     console.log(e)
+    //     }
+    // } 
+
 renderItem = ({item}) => {
   
       return (
-      <View style= { styles.tarjeta }>
-
-          <TouchableOpacity style={ styles.borrar } onPress = { this.storeUsuariosBorrados.bind(this, item) }>
-                <Text style = { styles.buttonText }>X</Text>
-         </TouchableOpacity>
-          <Animated.Image style= {styles.imagen } 
-            source={{ uri:  item.picture.medium }} onLongPress = {this.agrandarImagen.bind(this)}/>
-          <Text style= { styles.texto }> { item.name.first } { item.name.last } </Text>
-          <Text style= { styles.texto }> { item.email } </Text>
-          <Text style= { styles.texto }> { item.dob.date } ({ item.dob.age }) </Text>
-          <View style= { styles.iconos }>
-            <TouchableOpacity onPress= {this.verComentarios.bind(this, item)}>
-            <Image style= { styles.iconoComentar } source={{uri: "https://cdn.icon-icons.com/icons2/1875/PNG/512/comment_120216.png" }}/>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.verDetalle.bind(this, item)}>
-              <Image style= { styles.iconoVerDetalle } source={{uri: "https://image.flaticon.com/icons/png/512/673/673132.png" }}/>
-            </TouchableOpacity>
-          </View>
-          <Modal_verDetalle showModalDetalle = {this.state.showModalDetalle} cerrarDetalle={this.cerrarDetalle.bind(this)} itemSeleccionado = {this.state.itemSeleccionado} ></Modal_verDetalle>
-          <Modal_verComentarios showModalComentarios = {this.state.showModalComentarios} itemSeleccionado = {this.state.itemSeleccionado}></Modal_verComentarios>
-      </View>
+      <TarjetasViewImportedCards item = {item}  
+                          cerrarDetalle = {this.cerrarDetalle.bind(this, item)}
+                          verDetalle = {this.verDetalle.bind(this, item)}
+                          storeUsuariosBorrados = {this.storeUsuariosBorrados.bind(this, item)}
+                          // storeComentarios = {this.storeComentarios.bind(this, item)}
+                          // getComentarios = {this.getComentarios.bind(this, item)}
+                          >                 
+      </TarjetasViewImportedCards>
               )
   }
   
 keyExtractor = (item, idx) => idx.toString();
 
-position = new Animated.Value(100)
-
   render() {
+   
+    return(
 
-        return(
-            <View style = { styles.view }> 
+          <View style = {styles.view}> 
             <View style = {styles.secondView}>
               <Text style={ styles.title }> USUARIOS IMPORTADOS</Text>
               <TextInput style={styles.input} onChangeText={text => this.setState({buscador: text})} placeholder="Buscar..."></TextInput>
@@ -156,32 +186,31 @@ position = new Animated.Value(100)
               </TouchableOpacity>
             <View>
               </View>
-              <FlatList style= {styles.card}
+              <FlatList style= {{ top: this.position, 
+                                }, styles.card}
                       data = {this.state.apiActualizada}
                       keyExtractor = {this.keyExtractor}
                       renderItem = {this.renderItem}
               />
+              {/* <TextInput placeholder="agregar comentario..." onChange={(comentario) => this.storeComentario.bind(this, comentario)}>
+          </TextInput>
+          <TouchableOpacity onPress={this.getComentario.bind(this, comentario)}>
+            <Text>Guardar comentario</Text>
+          </TouchableOpacity> */}
               </View>
-              <TouchableOpacity  onPress={ this.getData.bind(this) }>
+              <TouchableOpacity onPress={ this.getData.bind(this) }>
                 <View style = { styles.button }> 
                   <Text style = { styles.buttonText }>
                     ACTUALIZAR USUARIOS IMPORTADOS
                   </Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress = {() => this.setState({apiActualizada: []})}>
-                <View style = {styles.button}>
-                  <Text style = {styles.buttonText}>
-                    BORRAR
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              <Modal_verDetalle showModalDetalle = {this.state.showModalDetalle} cerrarDetalle={this.cerrarDetalle.bind(this, this.state.itemSeleccionado)} itemSeleccionado = {this.state.itemSeleccionado} ></Modal_verDetalle>
             </View>
-            
-            
+ 
         )
 
-        };
+        }
         
 }
 

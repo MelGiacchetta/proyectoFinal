@@ -25,6 +25,7 @@ class Modal_verComentarios extends Component {
       }
 
       async storeComentarios(){
+        
         try{
 
           const jsonComentarios = JSON.stringify(this.state.comentarios);
@@ -42,8 +43,8 @@ return(
            <View style= {styles.verModal}>
             <Text>Comentarios: {this.state.comentarios}</Text>
             <Text></Text>
-            <TextInput style={styles.input} onChangeText={text => this.guardarComentario.bind(this, text)} placeholder = "Agregar comentario..."></TextInput>
-            <TouchableOpacity style={styles.button} onPress= {this.storeComentarios.bind(this)}>
+            <TextInput style={styles.input} onChangeText={text => this.guardarComentario(this, text)} placeholder = "Agregar comentario..."></TextInput>
+            <TouchableOpacity style={styles.button} onPress= {this.storeComentarios.bind(this, this.state.comentarios)}>
                 <Text style={styles.buttonText}>
                     COMENTAR
                 </Text>

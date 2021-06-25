@@ -3,9 +3,11 @@ import {Text,
         TouchableOpacity, 
         View, 
         Image, 
-        FlatList,} from 'react-native'
+        FlatList,
+        } from 'react-native'
 import styles from '../styles/Styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import TarjetasPapelera from '../components/TarjetasPapelera'
 
 class Screen_Papelera extends Component {
    constructor(props){
@@ -43,18 +45,25 @@ class Screen_Papelera extends Component {
    //  }
 
     async borrarDefinitivamente(idTarjeta) {
-      
+   
       let usuarios = this.state.usuariosPapelera.filter((usuarios)=>{
          return usuarios.login.uuid !== idTarjeta
              })
 
-      this.setState({usuariosPapelera: usuarios})
+      let usuariosBorradosDefinitivamente = this.state.usuariosPapelera.filter((usuarios)=>{
+         return usuarios.login.uuid == idTarjeta
+             })
+
+      this.setState({usuariosPapelera: usuarios, usuariosBorradosDefinitivamente: usuariosBorradosDefinitivamente})
       console.log(idTarjeta)
 
       try {
          this.state.usuariosPapelera.splice(idTarjeta, 1);
-         await AsyncStorage.setItem("UsuariosBorrados",JSON.stringify(this.state.usuariosPapelera))
+         await AsyncStorage.setItem("UsuariosBorrados", JSON.stringify(this.state.usuariosPapelera))
          this.setState({ usuariosPapelera: JSON.parse(await AsyncStorage.getItem("UsuariosBorrados")) })
+
+         await AsyncStorage.setItem("UsuariosBorradosDefinitivamente", JSON.stringify(this.state.usuariosBorradosDefinitivamente))
+         this.setState({ usuariosBorradosDefinitivamente: JSON.parse(await AsyncStorage.getItem("UsuariosBorradosDefinitivamente")) })
  
        } catch (error) {
          console.log(error);
@@ -64,15 +73,7 @@ class Screen_Papelera extends Component {
     renderItem = ({item}) => {
   
       return (
-      <View style= { styles.tarjeta }>
-          <Image style= { styles.imagen } source={{ uri:  item.picture.medium }}/>
-          <Text style= { styles.texto }> { item.name.first } { item.name.last } </Text>
-          <Text style= { styles.texto }> { item.email } </Text>
-          <Text style= { styles.texto }> { item.dob.date } ({ item.dob.age }) </Text>
-          <TouchableOpacity style={ styles.borrarPapelera } onPress = { this.borrarDefinitivamente.bind(this, item.login.uuid) }>
-         <Text style = { styles.buttonText }>Borrar definitivamente</Text>
-         </TouchableOpacity>
-      </View>
+      <TarjetasPapelera item = {item} borrarDefinitivamente = {this.borrarDefinitivamente.bind(this, item.login.uuid)}></TarjetasPapelera>
               )
   }
   
@@ -88,13 +89,16 @@ return(
                       keyExtractor = {this.keyExtractor}
                       renderItem = {this.renderItem}
               />
-      <View>
          <TouchableOpacity style={styles.button} onPress={this.getContactosBorrados.bind(this)}>
             <Text style={styles.buttonText}>
                Actualizar contactos borrados
             </Text>
          </TouchableOpacity>
-      </View>
+         <TouchableOpacity style={styles.button} onPress={this.restaurar.bind(this)}>
+            <Text style={styles.buttonText}>
+               RESTAURAR TODAS
+            </Text>
+         </TouchableOpacity>
    </View>
 
 )

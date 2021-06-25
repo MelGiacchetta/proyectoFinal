@@ -9,7 +9,7 @@ const styles = StyleSheet.create ({
     },
 
     secondView: {
-      top: 25
+      top: 35
     },
 
     title: {
@@ -82,6 +82,17 @@ const styles = StyleSheet.create ({
       borderColor: 'white',
     },
 
+    borrar2:{
+      fontSize:18,
+      position:"relative",
+      marginLeft:330,
+      padding:5,
+      borderRadius:30,
+      borderStyle:"solid",
+      backgroundColor: 'red',
+      borderColor: 'white',
+    },
+
     acercaDe: {
       backgroundColor: "lightcyan",
       flex: 1,
@@ -91,7 +102,7 @@ const styles = StyleSheet.create ({
     tarjeta:{ 
       borderWidth:2,
       borderStyle:"solid",
-      padding:10,
+      padding:30,
       margin:10,
       borderRadius:30,
       backgroundColor:"lavender",
@@ -101,8 +112,7 @@ const styles = StyleSheet.create ({
       width: 100,
       height: 100,
       borderRadius: 100,
-      flex: 1,
-      aligSelf: "center",
+      alignSelf: "center",
     },
 
     drawerStyle : {
@@ -138,13 +148,15 @@ const styles = StyleSheet.create ({
       fontSize: 30,
       textAlign: "center",
       backgroundColor: "lightcyan",
-      height: 250,
+      height: 400,
       width: 400,
       justifyContent: "center",
       alignItems: "center",
       borderRadius: 40,
       borderWidth: 1,
       borderStyle:"solid",
+      elevation: 20, 
+      shadowColor: "black",
     },
 
     borrarPapelera: {
@@ -190,6 +202,49 @@ const styles = StyleSheet.create ({
       fontSize: 40,
       textAlign: "center",
       fontWeight: "bold",
+    }, 
+
+    datos: {
+      top: 20,
+    },
+
+    buttonAnimate: {
+      backgroundColor: "lavender",
+      width: "70%",
+      borderRadius: 30,
+      borderColor: "black",
+      borderWidth: 2,
+      alignSelf: "center",
+    },
+
+    textButtonAnimate: {
+      color: "black",
+      textAlign: "center",
+      paddingTop: 10,
+      paddingBottom: 10,
+      paddingLeft: 20, 
+      paddingRight: 20,
+      fontSize: 15,
+     
+    },
+
+    comentarInput: {
+      borderWidth: 2,
+      borderStyle:"solid",
+      borderRadius: 15,
+      paddingTop: 10,
+      paddingBottom: 10,
+      paddingRight: 50,
+      paddingLeft: 50,
+      fontSize: 20,
+      textAlign: "center",
+    }, 
+
+    comentarios: {
+      paddingLeft: 50, 
+      paddingRight: 50, 
+      paddingTop: 10, 
+      paddingBottom: 10, 
     }
 
 })
