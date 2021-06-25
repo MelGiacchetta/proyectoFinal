@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Text, 
         TouchableOpacity, 
         View, 
-        Image, 
         FlatList,
         } from 'react-native'
 import styles from '../styles/Styles';
@@ -30,19 +29,6 @@ class Screen_Papelera extends Component {
         console.log(e)
         }
     }
-
-   //  async borrarDefinitivamente1(item){
-      
-
-   //    try{
-   //       const jsonBorradosDefinitivamente = JSON.stringify(this.state.usuariosPapelera);
-   //       await AsyncStorage.setItem("BorradosDefinitivamente", jsonBorradosDefinitivamente);
-   //     // Alert.alert("Datos guardados correctamente.");
-   //   }
-   //   catch(e){
-   //       console.log(e)
-   //   }
-   //  }
 
     async borrarDefinitivamente(idTarjeta) {
    

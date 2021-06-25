@@ -30,16 +30,6 @@ class Screen_ViewImportedCards extends Component {
         }
     }
 
-// componentDidMount() {
-//   this.unscribe = this.props.navigation.addListener('focus', () => {
-//     this.getData();
-//   })
-//   Alert.alert("Mount")
-// }
-// componentWillUnmount() {
-//   this.unscribe();
-// }
-
 async getData(){
   
       try {
