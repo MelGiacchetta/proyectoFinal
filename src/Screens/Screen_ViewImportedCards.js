@@ -10,10 +10,7 @@ import {
   View,
   TouchableOpacity,
   FlatList,
-  Image,
   TextInput,
-  Animated,
-  Easing,
 } from 'react-native';
 
 class Screen_ViewImportedCards extends Component {
@@ -97,8 +94,7 @@ async getData(){
     }
 
     verDetalle(usuario){
-      this.setState({ showModalDetalle: !this.state.showModalDetalle, itemSeleccionado: usuario })
-      console.log(this.state.itemSeleccionado)
+      this.setState({ showModalDetalle: true, itemSeleccionado: usuario })
         }   
 
     buscar(){

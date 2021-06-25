@@ -41,7 +41,6 @@ class Screen_Papelera extends Component {
              })
 
       this.setState({usuariosPapelera: usuarios, usuariosBorradosDefinitivamente: usuariosBorradosDefinitivamente})
-      console.log(idTarjeta)
 
       try {
          this.state.usuariosPapelera.splice(idTarjeta, 1);
