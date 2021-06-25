@@ -87,11 +87,11 @@ return(
                 Agregar información
             </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={this.getInformacion.bind(this, this.state.text, this.state.item)}>
+        {/* <TouchableOpacity onPress={this.getInformacion.bind(this, this.state.text, this.state.item)}>
             <Text>
                 Actualizar comentarios
             </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
            </View>
        </View>
    </Modal>
