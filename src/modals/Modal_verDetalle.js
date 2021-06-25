@@ -68,7 +68,7 @@ return(
    <Modal visible= {this.props.showModalDetalle} animationType= "slide" transparent= {true} >
        <View style= {styles.modalContenedor}>
            <View style= {styles.verModal}>
-           <TouchableOpacity style= {styles.borrar2} onPress = {  this.props.cerrarDetalle.bind(this)}>
+           <TouchableOpacity style= {styles.borrar2} onPress = {  this.props.cerrarDetalle }>
                 <Text style = { styles.buttonText }>X</Text>
           </TouchableOpacity>
           <Text style={styles.title}>DETALLE DEL CONTACTO</Text>
