@@ -131,7 +131,6 @@ renderItem = ({item}) => {
       return (
       <TarjetasViewImportedCards 
                           item = {item}  
-                          cerrarDetalle = {this.cerrarDetalle.bind(this, item)}
                           verDetalle = {this.verDetalle.bind(this, item)}
                           storeUsuariosBorrados = {this.storeUsuariosBorrados.bind(this, item)}
                           >                 
@@ -156,8 +155,7 @@ keyExtractor = (item, idx) => idx.toString();
               </TouchableOpacity>
             <View>
               </View>
-              <FlatList style= {{ top: this.position, 
-                                }, styles.card}
+              <FlatList style= {styles.card}
                       data = {this.state.apiActualizada}
                       keyExtractor = {this.keyExtractor}
                       renderItem = {this.renderItem}

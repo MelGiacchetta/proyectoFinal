@@ -20,33 +20,37 @@ class Modal_verDetalle extends Component {
     this.storeInformacion = this.storeInformacion.bind(this)
     }
 
-async storeInformacion(item){
-
+async storeInformacion(comentario, item){
     
-        let comentarios = this.state.comentarios
-        comentarios.push(this.state.text + " ")
+    if(item == this.props.itemSeleccionado && comentario !== null){
+     this.setState({comentarios: comentario})
+        console.log(this.state.text)
         
-            this.setState({comentarios: comentarios})
-            console.log(this.state.comentarios)
-    
             try{
                 const jsonComentarios = JSON.stringify(this.state.comentarios);
                 await AsyncStorage.setItem("Comentarios", jsonComentarios);
         
             }catch(e){
                 console.log(e)
+            }}else{
+                console.log("no hay informaciona adicional")
             }
         
 }
 
-async getInformacion(comentariosGuardados){
-   
-      let comentarios = this.state.comentarios.filter((comentario)=>{
-          return comentariosGuardados == comentarios
-      })
+async getInformacion(comentariosUsuario, item){
+    
+    if(item == this.props.itemSeleccionado && comentariosUsuario !== null){
+
+            let comentarios = this.state.comentarios
+
+        this.setState({comentarios: comentarios.concat(comentariosUsuario)})
+        
+
       try {
         const comentarios = await AsyncStorage.getItem("Comentarios");
         if (comentarios !== null){
+        this.setState({comentarios: comentarios})
           this.setState({comentarios: JSON.parse(comentarios)})
           
         } else {
@@ -54,6 +58,8 @@ async getInformacion(comentariosGuardados){
         }
         } catch(e){
         console.log(e)
+        }} else {
+            console.log("no hay comentarios")
         }
     } 
 
@@ -73,15 +79,15 @@ return(
              <Text> Postcode: {this.props.itemSeleccionado && this.props.itemSeleccionado.location.postcode} </Text> 
              <Text> Register date: {this.props.itemSeleccionado && this.props.itemSeleccionado.registered.date} </Text> 
              <Text> Phone: {this.props.itemSeleccionado && this.props.itemSeleccionado.phone} </Text> 
-             <Text style={styles.comentarios}>{this.props.itemSeleccionado && this.state.comentarios}</Text>
-          <TextInput style = {styles.comentarInput} onChangeText={value => this.setState({text: value})} placeholder="Agregar información...">
+             <Text style={styles.comentarios}>{this.props.itemSeleccionado == this.state.item ? this.state.comentarios : []}</Text>
+          <TextInput style = {styles.comentarInput} onChangeText={value => this.setState({text: value, item: this.props.itemSeleccionado})} placeholder="Agregar información...">
           </TextInput>
-          <TouchableOpacity onPress={this.storeInformacion.bind(this)}>
+          <TouchableOpacity onPress={this.storeInformacion.bind(this, this.state.text, this.state.item)}>
             <Text>
                 Agregar información
             </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={this.getInformacion.bind(this)}>
+        <TouchableOpacity onPress={this.getInformacion.bind(this, this.state.text, this.state.item)}>
             <Text>
                 Actualizar comentarios
             </Text>
