@@ -28,7 +28,7 @@ class Screen_Import extends Component {
     }
 
     async storeData(item){
-      
+ 
       let tarjetasImportadas = this.state.tarjetasImportadas
       tarjetasImportadas.push(item)
 
@@ -67,6 +67,7 @@ modificarTamañoTarjetas(){
     toValue: this.state.toValue,
     duration: 500,
     easing: Easing.elastic(1),
+    //suavizado
     useNativeDriver: true,
 }).start();
 this.setState({toValue : this.state.toValue == 1 ? 0.6 : 1})

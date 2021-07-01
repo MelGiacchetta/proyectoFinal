@@ -18,7 +18,7 @@ return(
    <NavigationContainer>
       <Drawer.Navigator drawerType= "slide" drawerPosition = "left" overlayColor = "paleturquoise" 
       drawerStyle= { styles.drawerStyle }
-       drawerContentOptions = {{
+      drawerContentOptions = {{
       activeTintColor: "black",
       backgroundColor: "black",
       activeBackgroundColor: "lightcyan",
